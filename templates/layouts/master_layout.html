@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='cssFiles/app.css') }}" >
+
+    <title>{% block title %} Default Title {% endblock %} </title>
+
+    <script>
+
+    function showSubmenu(navbarItem){
+        var submenu = navbarItem.children[0];
+        submenu.style.height = "150px";
+        var subitems = submenu.children;
+
+        for(var i in subitems){
+            subitems[i].style.display = "block";
+        }
+
+    }
+
+    function hideSubmenu(navbarItem){
+        var submenu = navbarItem.children[0];
+        submenu.style.height = "0px";
+        var subitems = submenu.children
+
+        for(var i in subitems){
+            subitems[i].style.display = "none";
+        }
+
+    }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="maindiv">
+
+        {% include "layouts/navbar.html" %}
+
+
+
+        {% block bodycontent %}
+
+        {% endblock %}
+
+
+
+    </div> <!-- end maindiv -->
+
+    {% include "layouts/footer.html" %}
+
+
+</body>
+
+</html>
+
