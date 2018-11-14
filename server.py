@@ -10,7 +10,7 @@ import views
 
 def create_app():
     app = Flask(__name__)
-    app.add_url_rule('/', 'home', view_func=views.home_page)
+    app.add_url_rule('/', 'index', view_func=views.home_page)
     app.add_url_rule('/events','events', view_func=views.events_page)
     return app
 
