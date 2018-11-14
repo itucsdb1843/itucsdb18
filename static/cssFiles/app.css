@@ -1,0 +1,90 @@
+body{
+    margin:0px;
+    background-color: rgb(250,250,250);
+}
+
+.maindiv {
+    background-color: #bbb;
+    position: relative;
+    width: 80%;
+    left: 10%;
+    height: 700px;
+
+}
+
+.footer{
+    text-align: center;
+    position: relative;
+    width: 80%;
+    left: 10%;
+    background-color: rgb(230,230,230);
+    color: gray;
+    font-family: Helvetica;
+    height: 150px;
+}
+
+.footerText{
+    position:relative;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    height: 100px;
+    width:200px;
+    text-align: center;
+
+}
+
+.navbar{
+    display: block;
+    background-color: rgb(230,230,230);
+    color: black;
+    bordrer: 1px solid rgb(50,50,50);
+    padding: 10px 10px 10px 0px;
+}
+
+
+.submenu{
+    background-color: orange;
+    display: block;
+    height: 0px;
+    top:40px;
+    position:absolute;
+    transition: height 0.3s ease;
+    width: 250px;
+}
+
+.submenu a{
+    text-decoration: none;
+    text-align:left;
+    color: black;
+    padding: 10px;
+    display:none;
+}
+
+.submenu a:hover{
+    color: white;
+    background-color: #003;
+}
+
+
+ni{
+    font-family: Helvetica;
+    display: inline;
+}
+
+.navbar-item{
+    padding: 10px;
+
+}
+.navbar-item:hover{
+    color: white;
+    cursor: pointer;
+    background-color: rgb(150,150,250);
+
+}
+.deneme2{
+
+    text-align: center;
+    color: white;
+
+}

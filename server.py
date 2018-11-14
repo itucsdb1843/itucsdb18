@@ -1,13 +1,22 @@
-from flask import Flask
+from flask import Flask, render_template
+from datetime import datetime
+import views
+#app = Flask(__name__)
 
 
-app = Flask(__name__)
+#@app.route("/")
+#def home_page():
+#    return "ello"
+
+def create_app():
+    app = Flask(__name__)
+    app.add_url_rule('/', 'home', view_func=views.home_page)
+    app.add_url_rule('/events','events', view_func=views.events_page)
+    return app
 
 
-@app.route("/")
-def home_page():
-    return "Hello, UNIVERSE!"
+app = create_app()
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
