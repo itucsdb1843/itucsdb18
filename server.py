@@ -31,6 +31,7 @@ def create_app():
 app = create_app()
 
 app.config.from_pyfile('config.py')
+app.secret_key = "TopSecretKey4235245223"
 
 
 login_manager = LoginManager()
