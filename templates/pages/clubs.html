@@ -1,0 +1,39 @@
+{% extends "layouts/master_layout.html" %}
+
+
+
+{% block navbarcontent %}
+
+  {% include "layouts/navbar.html" %}
+
+  {% block logincontent %}
+    <div style="xborder:1px solid black" class="navbarItem" onClick="location.href='/login'"> {{current_user.name}} </div>
+  {% endblock %}
+
+{% endblock %}
+
+
+
+{% block bodycontent %}
+
+    <h1 class="pageInfo" > Student Clubs </h1>  
+    <h4 class="pageInfo" > To see the events of a club, click on it. </h4>
+
+    {% for each_university in universities %}
+    <ul>
+      <li>{{each_university[1]}}
+
+      {% for each_club in clubs %}
+
+        {% if each_university[0] == each_club[6] %}
+          <ul>
+            <li class="clubsLi" onClick="location.href='/clubs/{{each_club[0]}}'"> {{each_club[1]}}</li>
+          </ul>
+        {% endif %}
+      {% endfor %}
+
+      </li>
+    </ul>
+    {% endfor %}
+
+{% endblock %}
