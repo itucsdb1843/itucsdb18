@@ -10,11 +10,6 @@ global_database_url = "postgres://itucs:itucspw@localhost:32768/itucsdb"
 
 class universitiesTable:
 
-    #def __init__(self):
-        #if os.getenv("DATABASE_URL") is None:
-        #    self.url = "postgres://itucs:itucspw@localhost:32769/itucsdb"
-        #else:
-        #    self.url = os.getenv("DATABASE_URL")
 
     def uploadAndSetPhoto(self,request_files, request_form):
         db_connection = dbapi2.connect(global_database_url)
@@ -216,18 +211,7 @@ class universityPhotosTable:
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
         query = "SELECT (logo) FROM university_photos WHERE(id=4)"
-        #cursor.execute(query)
-        #imgdata = cursor.fetchone()
-        #if(imgdata != None):
-        #    image = base64.b64decode(imgdata[0])
-        #else:
-        #    return None
-
-        #filename = 'temp.jpg'
-        #with open(filename, 'wb') as photo:
-        #    photo.write(image)
-        #return photo
-
+        
 
 class eventsTable:
 
