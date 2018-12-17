@@ -117,6 +117,9 @@ class universitiesTable:
         score_validation_result = form_validation.validateScore(form_result_map)
         if not score_validation_result:
             return False
+        campus = int(form_result_map['campus'])
+        social = int(form_result_map['social'])
+        education = int(form_result_map['education'])
 
         if score_id:
             cursor.execute("UPDATE avg_score SET score_by_campus= ( (score_by_campus * score_count) + %d) / (score_count+1) WHERE (id=%d)" % (campus,score_id))
