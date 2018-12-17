@@ -136,7 +136,7 @@ def events_page():
 		return redirect(url_for('events'))
 
 
-
+@login_required
 def clubs_page(club_id=None):
 	if request.method == 'GET':
 		if club_id == None:
