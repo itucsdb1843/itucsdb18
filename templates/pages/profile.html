@@ -1,0 +1,205 @@
+{% extends "layouts/master_layout.html" %}
+
+
+{% block navbarcontent %}
+
+	{% include "layouts/navbar.html" %}
+
+	{% block usercontent %}
+		<div style="xborder:1px solid black; width:17%; max-width:17%; display:inline-block;" class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> {{ current_user.name }}
+            <div class="submenu">
+          {% if current_user.is_authenticated() %}
+                <div class="submenuItem" onClick="location.href='/profile'"> Profile </div>
+                <div class="submenuItem" onClick="location.href='/login'"> Logout </div>
+             
+          {% else %}
+                <div class="submenuItem" onClick="location.href='/login'"> Login </div>
+          {% endif %}
+            </div>
+
+        </div>
+	{% endblock %}
+
+{% endblock %}
+
+
+{% block bodycontent %}
+
+    <h1 class="pageInfo" > PROFILE </h1>
+
+    {% if profile_edited == 1 %}
+        <h3 class="pageInfo" style="color:darkgreen; background-color:lightgreen; opacity:0.5" > Profile information is edited successfully. </h3>
+    {% endif %}
+    {% if avatar_changed == 1 %}
+        <h3 class="pageInfo" style="color:darkgreen; background-color:lightgreen; opacity:0.5" > Profile picture is changed successfully. </h3>
+    {% endif %}
+    {% if event_added == 1 %}
+        <h3 class="pageInfo" style="color:darkgreen; background-color:lightgreen; opacity:0.5" > Event is added successfully. </h3>
+    {% endif %}
+
+    <div class="profilePhotoContainer">
+    	<div class="profilePhotoDiv">
+    		<img src="../static/img/userProfile.jpg" style="width:100%; height:100%;border-radius:50%; border:1px solid black" title="Istanbul Technical University" alt="itu_logo">
+    	</div>
+    </div>
+
+    
+
+    <div class="profileInfo"> {{current_user.nickname}} </div>
+
+    <div class="profileSelection" onClick="location.href='/study_chains'"> MY STUDY CHAINS </div>
+
+
+    <div class="profileSelection" onclick="toggleCommentsDiv(this)"> Edit Profile Info </div>
+    <div class="editProfileInfo">
+    	<div class="register-div">
+    		<form method="POST" style="position:relative; top:5%">
+    			<div class="form-div">
+
+    				<p style="font-size:20px; text-decoration:underline; font-weight:bold">Personal Info</p>
+
+    				<input style="width:95%" type="text" name="firstname" placeholder="First name" ><br><br>
+
+    				<input style="width:95%" type="text" name="lastname" placeholder="Last name" ><br><br>
+
+    				<input style="width:95%" type="text" name="nickname" placeholder="Nickname"><br><br>
+
+    				<input style="width:95%" type="password" name="password" placeholder="Password"><br>
+
+    				<p>Status:</p>
+    				<input type="radio" name="status" value="HighSchool" required> High School<br>
+    				<input type="radio" name="status" value="Undergraduate" required> Undergreduate<br>
+  					<input type="radio" name="status" value="Graduate" required> Graduate<br><br><br>
+
+    			</div>
+
+    			<div class="form-div">
+
+    				<p style="font-size:20px; text-decoration:underline; font-weight: bold">Additional</p>
+
+    				<input style="width:95%" type="text" name="city" placeholder="City" ><br>
+
+					<p>University:</p>
+    				<select name="university_selection">
+            			<option>None</option>
+    					
+    			             {% for each_university_name in university_names %}
+                                <option>{{ each_university_name }}</option>
+                            {% endfor %}
+
+  						
+					</select>
+  				</div>
+
+  				<div class="form-div" style="text-align: center">
+   					<button name="editProfileInfoForm" class="mySubmitButton">Save Changes</button>
+   				</div>
+			</form>
+    	</div>
+    </div>
+
+
+
+    <div class="profileSelection" onclick="toggleCommentsDiv(this)"> Change Profile Photo </div>
+    <div class="changeProfilePhoto">
+    	<form enctype=multipart/form-data method="POST" action="">
+
+    		Browse a new profile photo:<br><br>
+        
+    		<input type=file name=photo> <br><br>
+
+    		<button name="changeProfilePhotoForm" class="mySubmitButton">Save Changes</button>
+
+    	</form>
+    	
+    </div>
+
+    <div class="profileSelection" onclick="toggleCommentsDiv(this)"> Add Event </div>
+    <div class="addEvent">
+    	<div class="register-div">
+    		<form method="POST" style="position:relative; top:5%">
+    			<div class="form-div">
+
+    				<p style="font-size:20px; text-decoration:underline; font-weight:bold">Event Info</p>
+
+    				Title of the event:<br>
+          			<input style="width:95%" type="text" name="title" placeholder="Title" required><br><br>
+
+          			Description:<br>
+    				<textarea style="width:95%" name="description" placeholder="Event Description (Max 500 words)" required></textarea> <br><br>
+
+    				Place:
+    				<input style="width:95%" type="text" name="place" placeholder="Place" required><br>
+
+    				<p>Start Time:</p>
+    				<select name="time_selection" required>
+            			<option>06:00</option>
+            			<option>07:00</option>
+            			<option>08:00</option>
+            			<option>09:00</option>
+            			<option>10:00</option>
+            			<option>11:00</option>
+            			<option>12:00</option>
+            			<option>13:00</option>
+            			<option>14:00</option>
+            			<option>15:00</option>
+            			<option>16:00</option>
+            			<option>17:00</option>
+            			<option>18:00</option>
+            			<option>19:00</option>
+            			<option>20:00</option>
+            			<option>21:00</option>
+            			<option>22:00</option>
+            			<option>23:00</option>
+          			</select><br><br>
+
+                    Duration (in hours):
+                    <input style="width:95%" type="text" name="duration" placeholder="Ex: 2" required><br><br>
+
+          			Date:
+    				<input style="width:95%" type="text" name="date" placeholder="Ex: YYYY-MM-DD" required><br><br>
+
+    				Price:
+    				<input style="width:95%" type="text" name="price" placeholder="Ex: 123.45" required><br>
+
+
+    			</div>
+
+    			<div class="form-div">
+
+    				
+					<p>University:</p>
+    				<select name="university_selection" required>
+            			<option>None</option>
+    					
+    			        {% for each_university_name in university_names %}
+  							<option>{{ each_university_name }}</option>
+                        {% endfor %}
+
+  						
+					</select>
+
+					<p>Club:</p>
+    				<select name="club_selection" required>
+            			<option>None</option>
+    					
+  						{% for each_club_name in club_names %}
+                            <option>{{ each_club_name }}</option>
+                        {% endfor %}	
+
+  						
+					</select>
+
+  				</div>
+
+  				<div class="form-div" style="text-align: center">
+   					<button name="addEventForm" class="mySubmitButton">Add Event</button>
+   				</div>
+			</form>
+    	</div>
+    	
+    </div>
+    
+
+
+{% endblock %}
