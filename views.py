@@ -7,12 +7,81 @@ import os
 after_registration = False
 
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated():
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 def home_page():
 	if request.method == 'GET':
 		from database import universityPhotosTable
 		university_photos_table = universityPhotosTable()
 		return render_template('pages/index.html')
+
+
+@login_required
+def profile_page():
+	if request.method == 'GET':
+
+		from database import universitiesTable,clubsTable,usersTable
+		users_table = usersTable()
+		users_table.getAvatar(current_user.id)
+		universities_table = universitiesTable()
+		clubs_table = clubsTable()
+		university_names = universities_table.getUniversityNames()
+		club_names = clubs_table.getClubNames()
+		return render_template('pages/profile.html', university_names = university_names, club_names = club_names)
+
+	else:
+		if 'editProfileInfoForm' in request.form:
+			form_result_map = request.form.to_dict()
+			from database import usersTable
+			users_table = usersTable()
+			changes_are_made = users_table.editUserProfileInfo(form_result_map)
+			#return render_template('pages/profile.html', profile_edited=changes_are_made)
+		elif 'changeProfilePhotoForm' in request.form and 'photo' in request.files:
+			from database import usersTable
+			users_table = usersTable()
+			avatar_changed = users_table.changeAvatar(request.files)
+			#return render_template('pages/profile.html', avatar_changed=avatar_changed)
+		elif 'addEventForm' in request.form:
+			from database import eventsTable
+			events_table = eventsTable()
+			event_added = events_table.addEvent(request.form)
+			#return render_template('pages/profile.html', event_added=event_added)
+		return redirect(url_for('profile'))
+
+
+@login_required
+def study_chains_page():
+	if request.method == 'GET':
+		from database import chainsTable
+		chains_table = chainsTable()
+		chains = chains_table.getAllChainsOfTheUser()
+		from database import todosTable
+		todos_table = todosTable()
+		todos_list = []
+		for each_chain in chains:
+			todos_list.append(todos_table.getAllTodosOfAChain(each_chain[0]))
+		print(todos_list)
+		return render_template('pages/study_chains.html',chains = chains, todos = todos_list)
+
+	else:
+		if 'addToDo' in request.form:
+			from database import todosTable
+			todos_table = todosTable()
+			todos_table.addToDo(request.form)
+			return redirect(url_for('study_chains'))
+		elif 'createChain' in request.form:
+			from database import chainsTable
+			chains_table = chainsTable()
+			chain_title = request.form['title']
+			chains_table.createChain(chain_title)
+			return redirect(url_for('study_chains'))
 
 
 
@@ -70,6 +139,40 @@ def events_page():
 
 
 
+def clubs_page(club_id=None):
+	if request.method == 'GET':
+		if club_id == None:
+			from database import clubsTable
+			clubs_table = clubsTable()
+			clubs_tuple = clubs_table.getAllClubs()
+
+			from database import universitiesTable
+			universities_table = universitiesTable()
+			university_tuple = universities_table.getAllUniversityNamesAndIds()
+			return render_template('pages/clubs.html', clubs = clubs_tuple, universities = university_tuple)
+
+		else:
+			from database import clubsTable
+			clubs_table = clubsTable()
+			club = clubs_table.getClubById(club_id)
+
+			from database import eventsTable
+			events_table = eventsTable()
+			events_tuple = events_table.getEventsByClubId(club_id)
+
+			from database import commentsTable
+			comments_table = commentsTable()
+
+			list_of_comment_tuples = []
+
+			for each_event in events_tuple:
+				comments_tuple = comments_table.getCommentsByEventId(each_event[0])
+				list_of_comment_tuples.append(comments_tuple)
+
+			return render_template('pages/club_single.html', club= club, events = events_tuple, comments = list_of_comment_tuples)
+
+
+@login_required
 def upload_university_photo_page():
 	if request.method == 'GET':
 		from database import universitiesTable
@@ -90,6 +193,20 @@ def university_rankings_page():
 		theListOfUniversityTuples = universities_table.getUniversitiesAndScoresOrderedByScore()
 		university_photos_table = universityPhotosTable()
 		university_photos_table.fetchAllPhotos(theListOfUniversityTuples)
+		#print(type(universities_and_scores_best_to_worst)) #list of tuple of tuples_as_strings
+		#print(universities_and_scores_best_to_worst)
+		#uni_tuple = universities_best_to_worst[0]
+		#print(type(uni_tuple)) #tuple of tuples_as_strings
+		#print(uni_tuple)
+		#first_tuple_str = uni_tuple[0]
+		#print(type(first_tuple_str)) #tuples_as_string
+		#print(first_tuple_str)
+		#uni_real_tuple = tuple(first_tuple_str.split(","))
+
+		#print(uni_real_tuple)
+		#index = 0
+		
+		#print()
 		return render_template('pages/university_rankings.html', theList = theListOfUniversityTuples)
 
 	else:
@@ -159,6 +276,28 @@ def register_page():
 		# .
 		# .
 
+def login_page():
+	
+	if request.method == 'GET':
+		if current_user.is_authenticated():
+			logout_user()
+			return render_template('pages/login.html', after_registration = False, login_failed = False, logged_out = True)
+		else:
+			global after_registration
+			temp_after_registration = after_registration
+			after_registration = False
+			return render_template('pages/login.html', after_registration = temp_after_registration, login_failed = False, logged_out = False)
+	else:
+		from database import usersTable
+		users_table = usersTable()
+		form_nickname = request.form['nickname']
+		form_password = request.form['password']
+		user_login_status = users_table.makeUserLoggedIn(form_nickname, form_password)
+		login_failed = False
+		if user_login_status == False:
+			login_failed = True
+			return render_template('pages/login.html', after_registration = False, login_failed = login_failed, logged_out = False)
+		return redirect(url_for('index'))
 
 
         
