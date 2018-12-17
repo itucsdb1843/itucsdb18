@@ -5,9 +5,6 @@ import psycopg2 as dbapi2
 
 
 INIT_STATEMENTS = [
-
-    """DROP TABLE todos""",
-    """DROP TABLE chains""",
     
     """CREATE TABLE IF NOT EXISTS university_photos(
         id SERIAL PRIMARY KEY NOT NULL,
@@ -143,7 +140,39 @@ INIT_STATEMENTS = [
         #'100. yil No:245 34563',
         #'+904525234527',
        # #'wwww.metu.edu.tr'
-    #)"""
+    #)""",
+                   
+   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+       'IEEE',
+       'Electrical Engineering',
+       2005,
+       78,
+       'ieee@odtu.edu.tr',
+       3)""",
+   
+   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+       'IEEE',
+       'Electrical Engineering',
+       2009,
+       25,
+       'ieee@boun.edu.tr',
+       2)""",
+   
+   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+     'ACM',
+     'Computer Engineering',
+     2015,
+     35,
+     'acm@itu.edu.tr',
+     1)""",
+   
+   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+     'IEEE',
+     'Electrical Engineering',
+     2015,
+     78,
+     'ieee@itu.edu.tr',
+     1)"""
 
 
     
