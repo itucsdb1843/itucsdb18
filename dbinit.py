@@ -137,6 +137,7 @@ INIT_STATEMENTS = [
 
     """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
         'Middle East Technical University',
+        'Ankara',
         'Turkey',
         '100. yil No:245 34563',
         '+904525234527',
