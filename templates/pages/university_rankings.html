@@ -1,0 +1,120 @@
+{% extends "layouts/master_layout.html" %}
+
+
+{% block navbarcontent %}
+
+	{% include "layouts/navbar.html" %}
+
+	{% block usercontent %}
+        <div style="xborder:1px solid black; width:17%; max-width:17%; display:inline-block;" class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> {{ current_user.name }}
+            <div class="submenu">
+          {% if current_user.is_authenticated() %}
+                <div class="submenuItem" onClick="location.href='/profile'"> Profile </div>
+                <div class="submenuItem" onClick="location.href='/login'"> Logout </div>
+             
+          {% else %}
+                <div class="submenuItem" onClick="location.href='/login'"> Login </div>
+          {% endif %}
+            </div>
+
+        </div>
+    {% endblock %}
+
+{% endblock %}
+
+
+{% block bodycontent %}
+
+    <h1 class="pageInfo">UNIVERSITY RANKINGS</h1>
+    <h3 class="pageInfo"> Rankings are determined by the scores gained on this website.</h3>
+    
+
+    <div class="profileSelection" onclick="toggleCommentsDiv(this)"> CLICK TO SCORE A UNIVERSITY </div>
+    <div class="universityScoreForm">
+        <form method="POST" style="position:relative; top:5%">
+            <div class="form-div">
+
+                <p style="font-size:20px; text-decoration:underline; font-weight:bold">Score a University</p>
+
+                University:
+                <select name="university_selection" required>
+                    {% for each_tuple in theList %}
+                        <option>{{ each_tuple[0] }}</option>
+                    {% endfor %}
+                </select><br><br>
+
+                Campus Score:
+                <input style="width:15%" type="text" name="campus" placeholder="0-100" required><br><br>
+                Education Score:
+                <input style="width:15%" type="text" name="education" placeholder="0-100" required><br><br>
+                Social Score:
+                <input style="width:15%" type="text" name="social" placeholder="0-100" required><br><br>
+
+
+            </div>
+
+
+            <div class="form-div" style="text-align: center">
+                <button name="scoreUniversity" class="mySubmitButton">Score</button>
+            </div>
+        </form>
+    </div>
+
+    {% for each_tuple in theList %}
+
+        <div class="universityCard">
+    	   <div class="logoCard">
+            
+            <table style="width:100%; height:100%; text-align:center">
+                <tr>
+                	<td> <img src="../static/img/logo{{loop.index}}.jpg" style="width:150px; height:200px" title="{{each_tuple[0]}}" alt="logo_{{each_tuple[0]}}"> </td>
+                </tr>
+            </table>
+            
+    	   </div>
+    	   <div class="infoCardBackground" style="background-image:url('../static/img/back{{loop.index}}.jpg')">
+               
+           </div>
+
+    	   <div class="infoCardContent">
+
+        		<h2 style="float:left; color:orange"> {{each_tuple[0]}} </h2>
+        		<h1 style="float:right; font-size:50px; color:red"> {{loop.index}} </h1>
+        		<br><br><br>
+        		<h1 style="color:yellow"> Score: {{each_tuple[3]}} </h1> 
+        		<h4> Location: {{each_tuple[1]}}, {{each_tuple[2]}} </h4>
+        		<h5> Address: {{each_tuple[4]}} <h5>
+        		<h5> Contact Info: {{each_tuple[5]}} , {{each_tuple[6]}} </h5>
+                
+    		</div>
+        </div>
+
+    {% endfor %}
+
+
+    <!--
+    <div class="universityCard">
+    	<div class="logoCard">
+    		<table style="width:100%; height:100%; text-align:center">
+                <tr>
+                	<td> <img src="../static/images/odtulogo.png" style="width:220px; height:200px" title="Middle East Technical University" alt="odtu_logo"> </td>
+                </tr>
+            </table>
+    	</div>
+    	<div class="infoCardBackground">
+
+    	</div>
+    	<div class="infoCardContent">
+    		<h2 style="float:left; color:orange"> Middle East Technical University </h2>
+    		<h1 style="float:right; font-size:50px; color:red"> 2 </h1>
+    		<br><br><br>
+    		<h1 style="color:yellow"> Score: 9.5 </h1> 
+    		<h4> Location: Ankara, Turkey </h4>
+    		<h5> Address: Resitpasa Mh. Katar Cd. No:245 34563 <h5>
+    		<h5> Contact Info: +903425234527 , odtu@odtu.edu.tr </h5>
+    	</div>
+    </div>
+-->
+
+
+{% endblock %}
