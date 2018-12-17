@@ -1,0 +1,126 @@
+{% extends "layouts/master_layout.html" %}
+
+
+{% block navbarcontent %}
+
+	{% include "layouts/navbar.html" %}
+
+	{% block usercontent %}
+		<div style="xborder:1px solid black; width:17%; max-width:17%; display:inline-block;" class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> {{ current_user.name }}
+            <div class="submenu">
+          {% if current_user.is_authenticated() %}
+                <div class="submenuItem" onClick="location.href='/profile'"> Profile </div>
+                <div class="submenuItem" onClick="location.href='/login'"> Logout </div>
+             
+          {% else %}
+                <div class="submenuItem" onClick="location.href='/login'"> Login </div>
+          {% endif %}
+            </div>
+
+        </div>
+	{% endblock %}
+
+{% endblock %}
+
+
+{% block bodycontent %}
+
+    <h1 class="pageInfo" > STUDY CHAINS </h1>
+
+
+    <div class="profilePhotoContainer">
+        <div class="profilePhotoDiv">
+            <img src="../static/img/userProfile.jpg" style="width:100%; height:100%;border-radius:50%; border:1px solid black" title="Istanbul Technical University" alt="itu_logo">
+        </div>
+    </div>
+
+
+    <div class="profileInfo"> {{current_user.nickname}} </div>
+
+
+
+    <div class="profileSelection" onclick="toggleCommentsDiv(this)"> ADD TODO / CREATE A CHAIN </div>
+
+    <div class="editProfileInfo">
+    	<div class="chainForm">
+    		<form method="POST" style="position:relative; top:5%">
+    			<div class="form-div">
+
+    				<p style="font-size:20px; text-decoration:underline; font-weight:bold">Add TODO to a Chain</p>
+
+                    Chain Title:
+    				<select name="chain_title_selection">
+                        {%for each_chain in chains%}
+                            <option> {{each_chain[1]}} </option>
+                        {%endfor%}
+                    </select><br><br>
+
+                    TODO:
+    				<textarea style="width:95%" type="text" name="description" placeholder="TODO"> </textarea><br><br>
+
+                    Starting Date:<br>
+    				<input style="width:95%" type="text" name="startDate" placeholder="YYYY-MM-DD"><br><br>
+
+                    Expected End Date:<br>
+    				<input style="width:95%" type="text" name="expEndDate" placeholder="YYY-MM-DD"><br>
+
+    			</div>
+
+  				<div class="form-div" style="text-align: center">
+   					<button name="addToDo" class="mySubmitButton">Submit</button>
+   				</div>
+			</form>
+    	</div>
+        <div class="chainForm">
+            <form method="POST" style="position:relative; top:5%">
+                <div class="form-div">
+
+                    <p style="font-size:20px; text-decoration:underline; font-weight:bold">Create a Chain</p>
+
+
+                    Chain Title:<br>
+                    <input style="width:95%" type="text" name="title" placeholder="Title of the Chain" ><br><br>
+
+                </div>
+
+
+                <div class="form-div" style="text-align: center">
+                    <button name="createChain" class="mySubmitButton">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="profileSelection"> EXISTING CHAINS </div>
+    
+    {% for each_chain_tuple in chains %}
+        <div class="chainDiv">
+        	<table style="width:100%; margin-top:20px">
+                <caption> <strong> {{each_chain_tuple[1]}} </strong> </caption>
+                <tr>
+                <th style="background-color:#888; color:white"> Start Date </th>
+                <th style="background-color:#888; color:white"> Expected End Date </th>
+                <th style="background-color:#888; color:white"> TODO </th>
+                <th style="background-color:#888; color:white"> Completed </th>
+                <th style="background-color:#888; color:white"> End Date</th>
+              </tr>
+            
+        {% for each_todo_tuple in todos[loop.index-1] %}
+                    <tr>
+                        <td> {{each_todo_tuple[2]}} </td>
+                        <td> {{each_todo_tuple[3]}} </td>
+                        <td> {{each_todo_tuple[1]}} </td>
+                        <td style="color: #0F0"> {{each_todo_tuple[5]}} </td>
+                        <td> {{each_todo_tuple[4]}} </td>
+                    </tr>
+        {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+
+    
+
+
+{% endblock %}
