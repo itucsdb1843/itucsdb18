@@ -25,11 +25,17 @@ body{
 
 }
 
+.clubsLi:hover{
+    color:blue;
+    cursor:pointer;
+}
+
 .chainForm{
 
     background-color: white;
     width:50%;
     border:2px solid black;
+    left:25%;
     position:relative;
 
 }
