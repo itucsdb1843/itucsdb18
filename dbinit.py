@@ -6,8 +6,6 @@ import psycopg2 as dbapi2
 
 INIT_STATEMENTS = [
                    
-    """DELETE FROM universities""",
-    """DELETE FROM clubs""",
     
     """CREATE TABLE IF NOT EXISTS university_photos(
         id SERIAL PRIMARY KEY NOT NULL,
