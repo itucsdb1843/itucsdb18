@@ -1,0 +1,118 @@
+{% extends "layouts/master_layout.html" %}
+
+
+{% block navbarcontent %}
+
+	{% include "layouts/navbar.html" %}
+
+
+	{% block logincontent %}
+		<div style="xborder:1px solid black" class="navbarItem" onClick="location.href='/login'"> {{current_user.name}} </div>
+	{% endblock %}
+
+
+{% endblock %}
+
+
+
+{% block bodycontent %}
+
+    <h1 class="pageInfo" > {{club[1]}} </h1>
+
+    <h4 class="pageInfo" > Departman: {{club[2]}} </h4>
+    <h4 class="pageInfo" > Foundation Date: {{club[3]}} </h4>
+    <h4 class="pageInfo" > Member Count: {{club[4]}} </h4>
+    <h4 class="pageInfo" > Contact Mail: {{club[5]}} </h4>
+
+
+    {% for each_event in events %}
+
+    	<div class="universityCard" onclick="toggleCommentsDiv(this)">
+    	   	<div class="logoCard">
+
+            	<table style="width:100%; height:100%">
+
+	                <tr><td> Date: {{each_event[5]}} </td></tr>
+
+	                <tr><td> Time: {{each_event[6]}}  </td></tr>
+
+	                <tr><td> Duration: {{each_event[7]}} hours</td></tr>
+
+	                <tr><td> Price: {{each_event[3]}} $</td></tr>
+	                
+	                <tr><td> Place: {{each_event[4]}} </td></tr>
+
+            	</table>
+ 
+    	   	</div>
+
+    	   	<div class="infoCardContent">
+  
+    			<h2 style="float:left; color:blue"> {{each_event[1]}} </h2>
+    			<h2 style="float:right; color:red"> {{each_event[9]}} </h2>
+    			<br><br><br>
+    			<p> {{each_event[2]}} </p>
+            
+    		</div>	
+    	</div>
+
+    	<div class="commentsDiv">
+
+	    {% for each_event_comments in comments %}
+
+	    	{% for each_comment in each_event_comments %}
+
+
+	    		{% if each_event[0] == each_comment[6] %}
+		    		<div class="singleCommentDiv">
+
+		    			<h5 style="color:blue; float:left; margin-right:10px">{{each_comment[8]}}</h5>
+
+			    		<form method="POST" action="">
+			    			<input style="float:right; width:5%; display:none" type="text" name="commentId" value={{each_comment[0]}} readonly>
+			    			<input style="float:right; border:1px solid black; cursor:pointer" type="submit" name="downvote" value={{each_comment[4]}}>
+			    			<h5 style="color:red; float:right; margin-top:0">Downvote:</h5>
+			    			<input style="float:right; border:1px solid black; margin-right:5px; cursor:pointer" type="submit" name="upvote" value={{each_comment[3]}}>
+			    			<h5 style="color:green; float:right; margin-top:0">Upvote:</h5>
+			    		</form>
+
+		    			<h6 style="color:grey">{{each_comment[7]}}</h6>
+		    			<h5 class="commentBody" style="font-weight: bold">{{each_comment[1]}}</h5>
+		    			<p class="commentBody">{{each_comment[2]}}</p>
+
+		    		</div>
+		    	{% endif %}
+		    {% endfor %}
+		{% endfor %}
+
+	    		<div class="singleCommentDiv">
+	    			<form method="POST" action="">
+
+	    				<input style="width:5%; display:none" type="text" name="eventId" value={{each_event[0]}} readonly>
+
+	    				Score the event:
+	    				<select name="eventScore">
+		            		<option>None</option>
+		  					<option>1</option>
+		  					<option>2</option>
+		  					<option>3</option>
+		  					<option>4</option>
+		  					<option>5</option>
+						</select><br><br>
+
+	    				Comment Title:<br>
+		        		<input style="width:50%" type="text" name="commentTitle" placeholder="Title"><br><br>
+
+		        		Comment:<br>
+		    			<textarea style="background-color:; width:80%; height:150px" name="commentBody" placeholder="Your Comment Here..."></textarea> <br><br>
+
+	    				<div style="width:100%;text-align:center"> <button name="commentForm" class="mySubmitButton">Submit</button> </div>
+					</form>
+	        	</div>
+
+		    </div>
+
+    {% endfor %}
+
+{% endblock %}
+
