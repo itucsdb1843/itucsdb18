@@ -113,68 +113,68 @@ INIT_STATEMENTS = [
         completed INT DEFAULT 0,
         chain_id INT NOT NULL,
         FOREIGN KEY (chain_id) REFERENCES chains ON DELETE CASCADE ON UPDATE CASCADE
-    )""",
+    )"""
 
 
 
-    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
-        'Istanbul Technical University',
-        'Istanbul',
-        'Turkey',
-        'Maslak 34467',
-        '+902165234527',
-        'wwww.itu.edu.tr'
-    )""",
+    #"""INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+    #    'Istanbul Technical University',
+    #    'Istanbul',
+    #    'Turkey',
+    #    'Maslak 34467',
+    #    '+902165234527',
+    #    'wwww.itu.edu.tr'
+    #)""",
 
-    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
-        'Bogazici University',
-        'Istanbul',
-        'Turkey',
-        'Hisarustu 34467',
-        '+903425236787',
-        'wwww.bogazici.edu.tr'
-    )""",
+    #"""INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+    #    'Bogazici University',
+    #    'Istanbul',
+    #    'Turkey',
+    #    'Hisarustu 34467',
+    #    '+903425236787',
+    #    'wwww.bogazici.edu.tr'
+    #)""",
 
-    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
-        'Middle East Technical University',
-        'Ankara',
-        'Turkey',
-        '100. yil No:245 34563',
-        '+904525234527',
-        'wwww.metu.edu.tr'
-    )""",
+    #"""INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+    #    'Middle East Technical University',
+    #    'Ankara',
+    #    'Turkey',
+    #    '100. yil No:245 34563',
+    #    '+904525234527',
+    #    'wwww.metu.edu.tr'
+    #)""",
                    
-    """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
-       'IEEE',
-       'Electrical Engineering',
-       2005,
-       78,
-       'ieee@odtu.edu.tr',
-       3)""",
+    #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+    #   'IEEE',
+    #   'Electrical Engineering',
+    #   2005,
+    #   78,
+    #   'ieee@odtu.edu.tr',
+    #   3)""",
    
-   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
-       'IEEE',
-       'Electrical Engineering',
-       2009,
-       25,
-       'ieee@boun.edu.tr',
-       2)""",
+    #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+    #   'IEEE',
+    #  'Electrical Engineering',
+    #   2009,
+    #   25,
+    #   'ieee@boun.edu.tr',
+    #   2)""",
    
-   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
-     'ACM',
-     'Computer Engineering',
-     2015,
-     35,
-     'acm@itu.edu.tr',
-     1)""",
+    #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+    # 'ACM',
+    #'Computer Engineering',
+    # 2015,
+    # 35,
+    # 'acm@itu.edu.tr',
+    # 1)""",
    
-   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
-     'IEEE',
-     'Electrical Engineering',
-     2015,
-     78,
-     'ieee@itu.edu.tr',
-     1)"""
+   #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+    # 'IEEE',
+    # 'Electrical Engineering',
+    # 2015,
+    # 78,
+    # 'ieee@itu.edu.tr',
+    # 1)"""
 
 
     
