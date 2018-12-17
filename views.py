@@ -170,42 +170,41 @@ def clubs_page(club_id=None):
 			return render_template('pages/club_single.html', club= club, events = events_tuple, comments = list_of_comment_tuples)
 	else:
 		if(club_id):
-            if 'addEventForm' in request.form:
-                form_result_map = request.form.to_dict()
-                from database import eventsTable
-                events_table = eventsTable()
-                events_table.addEventByClubId(form_result_map, club_id)
-            elif 'commentForm' in request.form:
-                form_result_map = request.form.to_dict()
-                if form_result_map['eventScore'] != 'None':
-                    from database import eventsTable
-                    events_table = eventsTable()
-                    events_table.addScore(form_result_map)
-                if form_result_map['commentBody']:
-                    from database import commentsTable
-                    comments_table = commentsTable()
-                    comments_table.addComment(form_result_map)
-    
-        elif 'upvote' in request.form:
-            form_result_map = request.form.to_dict()
-            from database import commentsTable
-                comments_table = commentsTable()
-                comment_id = form_result_map['commentId']
-                comments_table.updateUpvote(comment_id)
-            elif 'downvote' in request.form:
-                form_result_map = request.form.to_dict()
-                from database import commentsTable
-                comments_table = commentsTable()
-                comment_id = form_result_map['commentId']
-                comments_table.updateDownvote(comment_id)
-        elif 'deleteComment' in request.form:
-        form_result_map = request.form.to_dict()
-        from database import commentsTable
-        comments_table = commentsTable()
-        comment_id = form_result_map['commentId']
-        comments_table.deleteCommentById(comment_id)
+			if 'addEventForm' in request.form:
+				form_result_map = request.form.to_dict()
+				from database import eventsTable
+				events_table = eventsTable()
+				events_table.addEventByClubId(form_result_map, club_id)
+			elif 'commentForm' in request.form:
+				form_result_map = request.form.to_dict()
+				if form_result_map['eventScore'] != 'None':
+					from database import eventsTable
+					events_table = eventsTable()
+					events_table.addScore(form_result_map)
+				if form_result_map['commentBody']:
+					from database import commentsTable
+					comments_table = commentsTable()
+					comments_table.addComment(form_result_map)
+		elif 'upvote' in request.form:
+			form_result_map = request.form.to_dict()
+			from database import commentsTable
+			comments_table = commentsTable()
+			comment_id = form_result_map['commentId']
+			comments_table.updateUpvote(comment_id)
+		elif 'downvote' in request.form:
+			form_result_map = request.form.to_dict()
+			from database import commentsTable
+			comments_table = commentsTable()
+			comment_id = form_result_map['commentId']
+			comments_table.updateDownvote(comment_id)
+		elif 'deleteComment' in request.form:
+			form_result_map = request.form.to_dict()
+			from database import commentsTable
+			comments_table = commentsTable()
+			comment_id = form_result_map['commentId']
+			comments_table.deleteCommentById(comment_id)
 
-        return redirect(url_for('clubs'))
+		return redirect(url_for('clubs'))
 
 
 
