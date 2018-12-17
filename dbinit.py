@@ -112,7 +112,7 @@ INIT_STATEMENTS = [
         completed INT DEFAULT 0,
         chain_id INT NOT NULL,
         FOREIGN KEY (chain_id) REFERENCES chains ON DELETE CASCADE ON UPDATE CASCADE
-    )"""
+    )""",
 
 
 
@@ -142,7 +142,7 @@ INIT_STATEMENTS = [
        # #'wwww.metu.edu.tr'
     #)""",
                    
-   """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+    """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
        'IEEE',
        'Electrical Engineering',
        2005,
