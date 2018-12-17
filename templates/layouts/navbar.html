@@ -1,27 +1,25 @@
-        <nav class="navbar">
+        <div class="navbarMenu">
+          
+            <div class="navbarItem" onClick="location.href='/'">Home</div>
+          
+            <div class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)">Rankings
+              <div class="submenu">
+                <div class="submenuItem" onClick="location.href='/university_rankings'"> University Rankings </div>
+              </div>
+            </div>
 
-            <ni class="navbar-item"> Home</ni>
+            <div class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)">Students Platform
+              <div class="submenu">
+                <div class="submenuItem" onClick="location.href='/clubs'"> Clubs </div>
+                <div class="submenuItem" onClick="location.href='/events'"> Events </div>
+                <div class="submenuItem" onClick="location.href='/study_chains'"> Study Calendar </div>
+              </div>
+            </div>
 
-            <ni class="navbar-item" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> Rankings
-                <div class="submenu" style="left:73px">
-                    <a class="submenuItems" href="javascript:void(0)"> Best Universities </a>
-                    <a class="submenuItems" href="javascript:void(0)"> All Universities A-Z </a>
-                    <a class="submenuItems" href="javascript:void(0)"> By City </a>
-                </div>
-            </ni>
+        </div>
 
-            <ni class="navbar-item" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> Students Platform
-               <div class="submenu" style="left:173px">
-                   <a class="submenuItems" href="javascript:void(0)"> Experiences </a>
-                   <a class="submenuItems" href="javascript:void(0)"> Clubs-Events </a>
-               </div>
-            </ni>
+        <div class="navbarItem" style="xborder:1px solid black" onClick="location.href='/register'">Register</div>
 
-            <ni class="navbar-item"> Study Calendar </ni>
-
-            <ni class="navbar-item" style="float:right"> Sign in </ni>
-
-            <ni class="navbar-item" style="float:right"> Log in </ni>
-
-
-        </nav>
+        {% block usercontent %}
+          
+        {% endblock %}
