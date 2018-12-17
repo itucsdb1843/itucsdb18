@@ -5,6 +5,7 @@ import psycopg2 as dbapi2
 
 
 INIT_STATEMENTS = [
+
     """CREATE TABLE IF NOT EXISTS universities(
         id SERIAL NOT NULL PRIMARY KEY,
         name VARCHAR(100) UNIQUE NOT NULL,
@@ -37,7 +38,36 @@ INIT_STATEMENTS = [
         FOREIGN KEY (university_id) REFERENCES universities ON DELETE SET NULL ON UPDATE CASCADE
     )""",
 
-	"""CREATE TABLE IF NOT EXISTS comments(
+    """CREATE TABLE IF NOT EXISTS clubs(
+        id SERIAL NOT NULL PRIMARY KEY,
+        name VARCHAR(80) NOT NULL,
+        departman_name VARCHAR(50),
+        foundation_date INT,
+        member_count INT DEFAULT 1,
+        contact_mail VARCHAR(50),
+        university_id INT NOT NULL,
+        FOREIGN KEY (university_id) REFERENCES universities ON DELETE CASCADE ON UPDATE CASCADE
+    )""",
+
+    """CREATE TABLE IF NOT EXISTS events(
+        id SERIAL NOT NULL PRIMARY KEY,
+        title VARCHAR(50),
+        description VARCHAR(200) NOT NULL,
+        price INT DEFAULT 0,
+        place VARCHAR(80),  
+        event_date DATE,
+        event_time TIME,
+        duration INT,
+        club_id INT,
+        puan NUMERIC(2,1) DEFAULT 0,
+        number_of_evaluation INT DEFAULT 0,
+        user_id INT NOT NULL,
+        FOREIGN KEY (club_id) REFERENCES clubs ON DELETE CASCADE ON UPDATE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users ON DELETE SET NULL ON UPDATE CASCADE
+    )""",
+
+
+    """CREATE TABLE IF NOT EXISTS comments(
         id SERIAL NOT NULL PRIMARY KEY,
         title VARCHAR(50) NOT NULL,
         body VARCHAR(200) NOT NULL,
@@ -49,7 +79,22 @@ INIT_STATEMENTS = [
         user_nickname VARCHAR(20) NOT NULL,
         FOREIGN KEY (event_id) REFERENCES events ON DELETE CASCADE ON UPDATE CASCADE,
         FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE
+    )""",
+   
+
+    """CREATE TABLE IF NOT EXISTS todos(
+        id SERIAL NOT NULL PRIMARY KEY,
+        body VARCHAR(200) NOT NULL,
+        start_date DATE,
+        expected_end_date DATE,
+        real_end_date DATE DEFAULT NULL,
+        completed INT DEFAULT 0,
+        chain_id INT NOT NULL,
+        FOREIGN KEY (chain_id) REFERENCES chains ON DELETE CASCADE ON UPDATE CASCADE
     )"""
+
+    
+
 ]
 
 
@@ -67,4 +112,3 @@ if __name__ == "__main__":
         print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
         sys.exit(1)
     initialize(url)
-
