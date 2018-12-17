@@ -3,10 +3,10 @@
 
 {% block navbarcontent %}
 
-	{% include "layouts/navbar.html" %}
+    {% include "layouts/navbar.html" %}
 
-	{% block usercontent %}
-		<div style="xborder:1px solid black; width:17%; max-width:17%; display:inline-block;" class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> {{ current_user.name }}
+    {% block usercontent %}
+        <div style="xborder:1px solid black; width:17%; max-width:17%; display:inline-block;" class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> {{ current_user.name }}
             <div class="submenu">
           {% if current_user.is_authenticated() %}
                 <div class="submenuItem" onClick="location.href='/profile'"> Profile </div>
@@ -18,7 +18,7 @@
             </div>
 
         </div>
-	{% endblock %}
+    {% endblock %}
 
 {% endblock %}
 
@@ -30,7 +30,7 @@
 
     <div class="profilePhotoContainer">
         <div class="profilePhotoDiv">
-            <img src="../static/img/userProfile.jpg" style="width:100%; height:100%;border-radius:50%; border:1px solid black" title="Istanbul Technical University" alt="itu_logo">
+            <img src="../static/img/userProfile.jpg" style="width:100%; height:100%;border-radius:50%" title="{{current_user.nickname}}" alt="user_avatar">
         </div>
     </div>
 
@@ -42,35 +42,35 @@
     <div class="profileSelection" onclick="toggleCommentsDiv(this)"> ADD TODO / CREATE A CHAIN </div>
 
     <div class="editProfileInfo">
-    	<div class="chainForm">
-    		<form method="POST" style="position:relative; top:5%">
-    			<div class="form-div">
+        <div class="chainForm">
+            <form method="POST" style="position:relative; top:5%">
+                <div class="form-div">
 
-    				<p style="font-size:20px; text-decoration:underline; font-weight:bold">Add TODO to a Chain</p>
+                    <p style="font-size:20px; text-decoration:underline; font-weight:bold">Add TODO to a Chain</p>
 
                     Chain Title:
-    				<select name="chain_title_selection">
+                    <select name="chain_title_selection">
                         {%for each_chain in chains%}
                             <option> {{each_chain[1]}} </option>
                         {%endfor%}
                     </select><br><br>
 
                     TODO:
-    				<textarea style="width:95%" type="text" name="description" placeholder="TODO"> </textarea><br><br>
+                    <textarea style="width:95%" type="text" name="description" placeholder="TODO"> </textarea><br><br>
 
                     Starting Date:<br>
-    				<input style="width:95%" type="text" name="startDate" placeholder="YYYY-MM-DD"><br><br>
+                    <input style="width:95%" type="text" name="startDate" placeholder="YYYY-MM-DD"><br><br>
 
                     Expected End Date:<br>
-    				<input style="width:95%" type="text" name="expEndDate" placeholder="YYY-MM-DD"><br>
+                    <input style="width:95%" type="text" name="expEndDate" placeholder="YYY-MM-DD"><br>
 
-    			</div>
+                </div>
 
-  				<div class="form-div" style="text-align: center">
-   					<button name="addToDo" class="mySubmitButton">Submit</button>
-   				</div>
-			</form>
-    	</div>
+                <div class="form-div" style="text-align: center">
+                    <button name="addToDo" class="mySubmitButton">Submit</button>
+                </div>
+            </form>
+        </div>
         <div class="chainForm">
             <form method="POST" style="position:relative; top:5%">
                 <div class="form-div">
@@ -97,7 +97,7 @@
     
     {% for each_chain_tuple in chains %}
         <div class="chainDiv">
-        	<table style="width:100%; margin-top:20px">
+            <table style="width:100%; margin-top:20px">
                 <caption> <strong> {{each_chain_tuple[1]}} </strong> </caption>
                 <tr>
                 <th style="background-color:#888; color:white"> Start Date </th>

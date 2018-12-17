@@ -86,7 +86,7 @@ https://docs.docker.com/install
 
 Before running Docker, you may need to start Docker service in Linux. This can be done by many ways,
 one is explained below:
-https://docs.docker.com/install/linux/linux-postinstall
+ 
 It is quite advanced for new Linux user but it is manageble.
 
 Another options is to start Docker Daemon manually, 

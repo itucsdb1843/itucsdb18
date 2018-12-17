@@ -6,114 +6,114 @@ import psycopg2 as dbapi2
 
 INIT_STATEMENTS = [
                    
-    
+                   
     """CREATE TABLE IF NOT EXISTS university_photos(
-        id SERIAL PRIMARY KEY NOT NULL,
-        logo BYTEA,
-        background BYTEA 
-    )""",
+       id SERIAL PRIMARY KEY NOT NULL,
+       logo BYTEA,
+       background BYTEA
+       )""",
 
     """CREATE TABLE IF NOT EXISTS avg_score(
-        id SERIAL PRIMARY KEY,
-        average_score NUMERIC(3,1) NOT NULL DEFAULT 0,
-        score_by_campus INT,
-        score_by_education INT,
-        score_by_social_life INT,
-        score_count INT NOT NULL DEFAULT 0 
-    )""",
+       id SERIAL PRIMARY KEY,
+       average_score NUMERIC(3,1) NOT NULL DEFAULT 0,
+       score_by_campus INT,
+       score_by_education INT,
+       score_by_social_life INT,
+       score_count INT NOT NULL DEFAULT 0
+       )""",
 
     """CREATE TABLE IF NOT EXISTS universities(
-        id SERIAL NOT NULL PRIMARY KEY,
-        name VARCHAR(100) UNIQUE NOT NULL,
-        city VARCHAR(15),
-        country VARCHAR(30),
-        images_id INT,
-        score_id INT,
-        address TEXT UNIQUE,
-        phone_no VARCHAR(13) UNIQUE,
-        website VARCHAR(50) UNIQUE,
-        FOREIGN KEY (images_id) REFERENCES university_photos ON DELETE SET NULL ON UPDATE CASCADE,
-        FOREIGN KEY (score_id) REFERENCES avg_score ON DELETE SET NULL ON UPDATE CASCADE
-    )""",
+       id SERIAL NOT NULL PRIMARY KEY,
+       name VARCHAR(100) UNIQUE NOT NULL,
+       city VARCHAR(15),
+       country VARCHAR(30),
+       images_id INT,
+       score_id INT,
+       address TEXT UNIQUE,
+       phone_no VARCHAR(13) UNIQUE,
+       website VARCHAR(50) UNIQUE,
+       FOREIGN KEY (images_id) REFERENCES university_photos ON DELETE SET NULL ON UPDATE CASCADE,
+       FOREIGN KEY (score_id) REFERENCES avg_score ON DELETE SET NULL ON UPDATE CASCADE
+       )""",
 
-    
+
 
     """CREATE TABLE IF NOT EXISTS users(
-        id SERIAL NOT NULL PRIMARY KEY, 
-        name VARCHAR(20) NOT NULL, 
-        surname VARCHAR(20) NOT NULL, 
-        nickname VARCHAR(20) UNIQUE NOT NULL,
-        password VARCHAR(80) NOT NULL,
-        email TEXT UNIQUE NOT NULL,
-        status VARCHAR(15) NOT NULL,
-        city VARCHAR(15),
-        university_id INT,
-        last_login TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        registration_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        avatar BYTEA DEFAULT NULL,
-        FOREIGN KEY (university_id) REFERENCES universities ON DELETE SET NULL ON UPDATE CASCADE
-    )""",
+       id SERIAL NOT NULL PRIMARY KEY,
+       name VARCHAR(20) NOT NULL,
+       surname VARCHAR(20) NOT NULL,
+       nickname VARCHAR(20) UNIQUE NOT NULL,
+       password VARCHAR(80) NOT NULL,
+       email TEXT UNIQUE NOT NULL,
+       status VARCHAR(15) NOT NULL,
+       city VARCHAR(15),
+       university_id INT,
+       last_login TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       registration_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       avatar BYTEA DEFAULT NULL,
+       FOREIGN KEY (university_id) REFERENCES universities ON DELETE SET NULL ON UPDATE CASCADE
+       )""",
 
     """CREATE TABLE IF NOT EXISTS clubs(
-        id SERIAL NOT NULL PRIMARY KEY,
-        name VARCHAR(80) NOT NULL,
-        departman_name VARCHAR(50),
-        foundation_date INT,
-        member_count INT DEFAULT 1,
-        contact_mail VARCHAR(50),
-        university_id INT NOT NULL,
-        FOREIGN KEY (university_id) REFERENCES universities ON DELETE CASCADE ON UPDATE CASCADE
-    )""",
+       id SERIAL NOT NULL PRIMARY KEY,
+       name VARCHAR(80) NOT NULL,
+       departman_name VARCHAR(50),
+       foundation_date INT,
+       member_count INT DEFAULT 1,
+       contact_mail VARCHAR(50),
+       university_id INT NOT NULL,
+       FOREIGN KEY (university_id) REFERENCES universities ON DELETE CASCADE ON UPDATE CASCADE
+       )""",
 
     """CREATE TABLE IF NOT EXISTS events(
-        id SERIAL NOT NULL PRIMARY KEY,
-        title VARCHAR(50),
-        description VARCHAR(200) NOT NULL,
-        price INT DEFAULT 0,
-        place VARCHAR(80),  
-        event_date DATE,
-        event_time TIME,
-        duration INT,
-        club_id INT,
-        puan NUMERIC(2,1) DEFAULT 0,
-        number_of_evaluation INT DEFAULT 0,
-        user_id INT NOT NULL,
-        FOREIGN KEY (club_id) REFERENCES clubs ON DELETE CASCADE ON UPDATE CASCADE,
-        FOREIGN KEY (user_id) REFERENCES users ON DELETE SET NULL ON UPDATE CASCADE
-    )""",
+       id SERIAL NOT NULL PRIMARY KEY,
+       title VARCHAR(50),
+       description VARCHAR(200) NOT NULL,
+       price INT DEFAULT 0,
+       place VARCHAR(80),
+       event_date DATE,
+       event_time TIME,
+       duration INT,
+       club_id INT,
+       puan NUMERIC(2,1) DEFAULT 0,
+       number_of_evaluation INT DEFAULT 0,
+       user_id INT NOT NULL,
+       FOREIGN KEY (club_id) REFERENCES clubs ON DELETE CASCADE ON UPDATE CASCADE,
+       FOREIGN KEY (user_id) REFERENCES users ON DELETE SET NULL ON UPDATE CASCADE
+       )""",
 
 
     """CREATE TABLE IF NOT EXISTS comments(
-        id SERIAL NOT NULL PRIMARY KEY,
-        title VARCHAR(50) NOT NULL,
-        body VARCHAR(200) NOT NULL,
-        useful_no INT DEFAULT 0,
-        useless_no INT DEFAULT 0,
-        user_id INT NOT NULL,
-        event_id INT NOT NULL,
-        comment_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        user_nickname VARCHAR(20) NOT NULL,
-        FOREIGN KEY (event_id) REFERENCES events ON DELETE CASCADE ON UPDATE CASCADE,
-        FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE
-    )""",
-    
+       id SERIAL NOT NULL PRIMARY KEY,
+       title VARCHAR(50) NOT NULL,
+       body VARCHAR(200) NOT NULL,
+       useful_no INT DEFAULT 0,
+       useless_no INT DEFAULT 0,
+       user_id INT NOT NULL,
+       event_id INT NOT NULL,
+       comment_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       user_nickname VARCHAR(20) NOT NULL,
+       FOREIGN KEY (event_id) REFERENCES events ON DELETE CASCADE ON UPDATE CASCADE,
+       FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE
+       )""",
+
     """CREATE TABLE IF NOT EXISTS chains(
-        id SERIAL NOT NULL PRIMARY KEY,
-        title VARCHAR(50) UNIQUE NOT NULL,
-        user_id INT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE
-    )""",
+       id SERIAL NOT NULL PRIMARY KEY,
+       title VARCHAR(50) UNIQUE NOT NULL,
+       user_id INT NOT NULL,
+       FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE
+       )""",
 
     """CREATE TABLE IF NOT EXISTS todos(
-        id SERIAL NOT NULL PRIMARY KEY,
-        body VARCHAR(200) NOT NULL,
-        start_date DATE,
-        expected_end_date DATE,
-        real_end_date DATE DEFAULT NULL,
-        completed INT DEFAULT 0,
-        chain_id INT NOT NULL,
-        FOREIGN KEY (chain_id) REFERENCES chains ON DELETE CASCADE ON UPDATE CASCADE
-    )"""
+       id SERIAL NOT NULL PRIMARY KEY,
+       body VARCHAR(200) NOT NULL,
+       start_date DATE,
+       expected_end_date DATE,
+       real_end_date DATE DEFAULT NULL,
+       completed INT DEFAULT 0,
+       chain_id INT NOT NULL,
+       FOREIGN KEY (chain_id) REFERENCES chains ON DELETE CASCADE ON UPDATE CASCADE
+       )"""
 
 
 
@@ -143,7 +143,7 @@ INIT_STATEMENTS = [
     #    '+904525234527',
     #    'wwww.metu.edu.tr'
     #)""",
-                   
+
     #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
     #   'IEEE',
     #   'Electrical Engineering',
@@ -151,7 +151,7 @@ INIT_STATEMENTS = [
     #   78,
     #   'ieee@odtu.edu.tr',
     #   3)""",
-   
+
     #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
     #   'IEEE',
     #  'Electrical Engineering',
@@ -159,7 +159,7 @@ INIT_STATEMENTS = [
     #   25,
     #   'ieee@boun.edu.tr',
     #   2)""",
-   
+
     #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
     # 'ACM',
     #'Computer Engineering',
@@ -167,8 +167,8 @@ INIT_STATEMENTS = [
     # 35,
     # 'acm@itu.edu.tr',
     # 1)""",
-   
-   #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
+
+    #"""INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
     # 'IEEE',
     # 'Electrical Engineering',
     # 2015,
@@ -177,7 +177,7 @@ INIT_STATEMENTS = [
     # 1)"""
 
 
-    
+
 
 ]
 

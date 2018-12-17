@@ -10,11 +10,6 @@ global_database_url = "postgres://vfssrhxrwgmkjb:a9106ca3abea0a13108ea5de84abdf8
 
 class universitiesTable:
 
-    #def __init__(self):
-        #if os.getenv("DATABASE_URL") is None:
-        #    self.url = "postgres://itucs:itucspw@localhost:32769/itucsdb"
-        #else:
-        #    self.url = os.getenv("DATABASE_URL")
 
     def uploadAndSetPhoto(self,request_files, request_form):
         db_connection = dbapi2.connect(global_database_url)
@@ -29,9 +24,6 @@ class universitiesTable:
             university_photos_table.addPhoto(filename, photo_type, university_name)
         else:
             university_photos_table.updatePhoto(filename, photo_type, images_id)
-
-
-
 
 
     def getImagesIdByUniversityName(self,university_name):
@@ -90,7 +82,6 @@ class universitiesTable:
         cursor = db_connection.cursor()
         cursor.execute("SELECT (name, city, country, average_score, address, phone_no, website) FROM universities,avg_score WHERE (universities.score_id = avg_score.id) ORDER BY average_score DESC")
         universities_list = cursor.fetchall();
-        print(universities_list)
 
         list_of_tuples = []
         #for place,each_tuple in enumerate(universities_list, start=1) #for indexed traversing
@@ -120,13 +111,11 @@ class universitiesTable:
         form_result_map = request_form.to_dict()
         university_name = form_result_map['university_selection']
         score_id = universities_table.getScoreIdByName(university_name)
-        campus = int(form_result_map['campus'])
-        social = int(form_result_map['social'])
-        education = int(form_result_map['education'])
 
-        if int(campus)>100 or int(social)>100 or int(education)>100:
-            return False
-        if int(campus) + int(social) + int(education) == 300:
+        from form import formValidation
+        form_validation = formValidation()
+        score_validation_result = form_validation.validateScode(form_result_map)
+        if not score_validation_result:
             return False
 
         if score_id:
@@ -149,13 +138,6 @@ class universitiesTable:
         
 
 class usersTable:
-
-    #def __init__(self):
-    #    if os.getenv("DATABASE_URL") is None:
-    #        self.url = "postgres://itucs:itucspw@localhost:32769/itucsdb"
-    #    else:
-    #        self.url = os.getenv("DATABASE_URL")
-    
 
     def editUserProfileInfo(self,form_result_map):
         db_connection = dbapi2.connect(global_database_url)
@@ -264,8 +246,7 @@ class usersTable:
             university_id_as_str = "NULL"
 
         add_user_query = "INSERT INTO users (name, surname, nickname, email, password, status, city, university_id) VALUES('%s','%s','%s','%s','%s','%s','%s',%s)" % (name,surname,nickname,email,hashed_password,status,city,university_id_as_str)
-    
-        print(add_user_query)
+
         cursor.execute(add_user_query)
         db_connection.commit()
         cursor.close()
@@ -301,8 +282,10 @@ class usersTable:
         query = "SELECT * FROM users WHERE (id = %d)" % (user_id)
         cursor.execute(query)
         user_tuple = cursor.fetchone()
-        user = User(user_tuple)
-        return user
+        if user_tuple:
+            user = User(user_tuple)
+            return user
+        return None
 
     def getAvatar(self,user_id):
         db_connection = dbapi2.connect(global_database_url)
@@ -318,7 +301,7 @@ class usersTable:
         filename = 'static/img/userProfile.jpg'
         with open(filename, 'wb') as photo:
             photo.write(image)
-            print("avatar fetched")
+            #print("avatar fetched")
             #os.remove(filename)
             #print("avatar removed")
         #return photo
@@ -494,23 +477,23 @@ class eventsTable:
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
         
+        from form import formValidation
+        form_validation = formValidation()
+        date = form_request_map['date']
+        date_validation_result = form_validation.validateDate(date)
+        if not date_validation_result:
+            return False
+
         title = form_request_map['title']
         description = form_request_map['description']
         price = form_request_map['price']
         place = form_request_map['place']
         time = form_request_map['time_selection']
-
-        date = form_request_map['date']
-        try:
-            datetime.datetime.strptime(date, '%Y-%m-%d')
-        except ValueError:
-            return "Date instance must be in format of YYYY-MM-DD"
-
         duration = form_request_map['duration']
+
         add_event_query = "INSERT INTO events (title,description,price,place,event_date,event_time,duration,club_id,user_id) VALUES('%s','%s',%f,'%s','%s','%s',%d,%d,%d)" % (title,description,float(price),place,date,time,int(duration),int(club_id),current_user.id)
         cursor.execute(add_event_query)
         db_connection.commit()
-
 
     def deleteEventById(self,event_id):
         db_connection = dbapi2.connect(global_database_url)
@@ -526,7 +509,7 @@ class commentsTable:
     def getAllComments(self):
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
-        query = "SELECT * FROM comments ORDER BY comment_time"
+        query = "SELECT * FROM comments"
         cursor.execute(query)
         comments_tuple = cursor.fetchall()
         cursor.close()
@@ -536,7 +519,7 @@ class commentsTable:
     def getCommentsByEventId(self, event_id):
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
-        query = "SELECT * FROM comments WHERE (event_id=%d) ORDER BY comment_time" % (int(event_id))
+        query = "SELECT * FROM comments WHERE (event_id=%d)" % (int(event_id))
         cursor.execute(query)
         comments_tuple = cursor.fetchall()
         cursor.close()
@@ -624,7 +607,6 @@ class chainsTable:
         cursor = db_connection.cursor()
         cursor.execute("SELECT * FROM chains")
         chains = cursor.fetchall()
-        print(chains)
         cursor.close()
         return chains
 

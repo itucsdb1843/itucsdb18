@@ -1,11 +1,12 @@
 import sys
+import datetime
 from flask import render_template, url_for, redirect, request, abort
 from flask_login import login_required,logout_user,current_user
 from functools import wraps
 import os
 
 after_registration = False
-
+scored = False
 
 def login_required(f):
     @wraps(f)
@@ -18,8 +19,6 @@ def login_required(f):
 
 def home_page():
 	if request.method == 'GET':
-		from database import universityPhotosTable
-		university_photos_table = universityPhotosTable()
 		return render_template('pages/index.html')
 
 
@@ -67,7 +66,6 @@ def study_chains_page():
 		todos_list = []
 		for each_chain in chains:
 			todos_list.append(todos_table.getAllTodosOfAChain(each_chain[0]))
-		print(todos_list)
 		return render_template('pages/study_chains.html',chains = chains, todos = todos_list)
 
 	else:
@@ -170,6 +168,45 @@ def clubs_page(club_id=None):
 				list_of_comment_tuples.append(comments_tuple)
 
 			return render_template('pages/club_single.html', club= club, events = events_tuple, comments = list_of_comment_tuples)
+	else:
+		if(club_id):
+            if 'addEventForm' in request.form:
+                form_result_map = request.form.to_dict()
+                from database import eventsTable
+                events_table = eventsTable()
+                events_table.addEventByClubId(form_result_map, club_id)
+            elif 'commentForm' in request.form:
+                form_result_map = request.form.to_dict()
+                if form_result_map['eventScore'] != 'None':
+                    from database import eventsTable
+                    events_table = eventsTable()
+                    events_table.addScore(form_result_map)
+                if form_result_map['commentBody']:
+                    from database import commentsTable
+                    comments_table = commentsTable()
+                    comments_table.addComment(form_result_map)
+    
+        elif 'upvote' in request.form:
+            form_result_map = request.form.to_dict()
+            from database import commentsTable
+                comments_table = commentsTable()
+                comment_id = form_result_map['commentId']
+                comments_table.updateUpvote(comment_id)
+            elif 'downvote' in request.form:
+                form_result_map = request.form.to_dict()
+                from database import commentsTable
+                comments_table = commentsTable()
+                comment_id = form_result_map['commentId']
+                comments_table.updateDownvote(comment_id)
+        elif 'deleteComment' in request.form:
+        form_result_map = request.form.to_dict()
+        from database import commentsTable
+        comments_table = commentsTable()
+        comment_id = form_result_map['commentId']
+        comments_table.deleteCommentById(comment_id)
+
+        return redirect(url_for('clubs'))
+
 
 
 @login_required
@@ -183,36 +220,27 @@ def upload_university_photo_page():
 		from database import universitiesTable
 		universities_table = universitiesTable()
 		universities_table.uploadAndSetPhoto(request.files, request.form)
-		return redirect(url_for('index'))
+		return redirect(url_for('upload_university_photo'))
 
 
 def university_rankings_page():
+	global scored
 	if request.method == 'GET':
 		from database import universitiesTable,universityPhotosTable
 		universities_table = universitiesTable()
 		theListOfUniversityTuples = universities_table.getUniversitiesAndScoresOrderedByScore()
 		university_photos_table = universityPhotosTable()
-		university_photos_table.fetchAllPhotos(theListOfUniversityTuples)
-		#print(type(universities_and_scores_best_to_worst)) #list of tuple of tuples_as_strings
-		#print(universities_and_scores_best_to_worst)
-		#uni_tuple = universities_best_to_worst[0]
-		#print(type(uni_tuple)) #tuple of tuples_as_strings
-		#print(uni_tuple)
-		#first_tuple_str = uni_tuple[0]
-		#print(type(first_tuple_str)) #tuples_as_string
-		#print(first_tuple_str)
-		#uni_real_tuple = tuple(first_tuple_str.split(","))
-
-		#print(uni_real_tuple)
-		#index = 0
+		photo_exists_list = university_photos_table.fetchAllPhotos(theListOfUniversityTuples)
+		university_names = universities_table.getUniversityNames()
 		
-		#print()
-		return render_template('pages/university_rankings.html', theList = theListOfUniversityTuples)
+		oldScored = scored
+		scored = False
+		return render_template('pages/university_rankings.html', theList = theListOfUniversityTuples, university_names = university_names, photo_exists_list = photo_exists_list, scored = oldScored)
 
 	else:
 		from database import universitiesTable
 		universities_table = universitiesTable()
-		universities_table.addScore(request.form)
+		scored = universities_table.addScore(request.form)
 		return redirect(url_for('university_rankings'))
 	     
 
@@ -224,6 +252,15 @@ def register_page():
 		university_names = universities_table.getUniversityNames()
 		return render_template("pages/register.html", university_names = university_names)
 	else:
+		from form import formValidation
+		form_validation = formValidation()
+
+		form_result_map = request.form.to_dict()
+		email = form_result_map['email']
+		email_validation_result = form_validation.validateEmail(email)
+        #if not email_validation_result:
+            #return "Email should be in the form of 'example@example.com'"
+
 		from database import usersTable
 		users_table = usersTable()
 		#to get the form result as a whole (best approach) (form names are unknown)

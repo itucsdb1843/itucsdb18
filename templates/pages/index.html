@@ -26,7 +26,37 @@
 
 {% block bodycontent %}
 
-    <h1 class="pageInfo" > HOME </h1>
+    <div class="theOrientationCard" style="background-image:url('../static/img/main.jpg')">
+        <div class="theOrientationText">
+           <h2 class="theGiantText">
+              <a href="{{url_for('index')}}"> Home </a>
+          </h2>
+        </div>
+    </div>
+
+    <div class="theOrientationCard" style="background-image:url('../static/img/ITU-Background.jpg')">
+        <div class="theOrientationText">
+          <h1 class="theGiantText">
+            <a href="{{url_for('university_rankings')}}"> University Rankings </a>
+          </h1>  
+        </div>
+    </div>
+
+    <div class="theOrientationCard" style="background-image:url('../static/img/clubevent.jpg'); background-position: top">
+        <div class="theOrientationText">
+          <h1 class="theGiantText"> 
+            <a href="{{url_for('clubs')}}">Clubs-Events</a>
+          </h1>
+        </div>
+    </div>
+
+    <div class="theOrientationCard" style="background-image:url('../static/img/zincir.jpg'); background-position: bottom">
+        <div class="theOrientationText">
+          <h1 class="theGiantText">
+            <a href="{{url_for('study_chains')}}"> Study Chains </a>
+          </h1>
+        </div>
+    </div>
 
 
 {% endblock %}

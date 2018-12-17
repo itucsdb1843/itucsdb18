@@ -4,8 +4,6 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
-
-
 from models.user import Anonymous
 import views
 
@@ -27,7 +25,7 @@ def create_app():
         
     app.add_url_rule('/university_rankings', 'university_rankings', view_func=views.university_rankings_page, methods = ["GET","POST"])
 
-    app.add_url_rule('/upload_university_photo', 'upload_photo', view_func=views.upload_university_photo_page, methods = ["GET","POST"])
+    app.add_url_rule('/upload_university_photo', 'upload_university_photo', view_func=views.upload_university_photo_page, methods = ["GET","POST"])
 
     app.add_url_rule('/profile','profile', view_func=views.profile_page, methods = ["GET","POST"])
 
@@ -45,13 +43,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.anonymous_user = Anonymous
 
+
 @login_manager.user_loader
 def load_user(user_id):
     from database import usersTable
     users_table = usersTable()
     user = users_table.getUserObjectByID(user_id)
     return user
-
 
 
 photos = UploadSet('photos',IMAGES)
