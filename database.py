@@ -1,5 +1,6 @@
 import os
 import psycopg2 as dbapi2
+import datetime
 from server import login_manager, bcrypt, photos, app
 from flask_login import login_user, current_user, logout_user
 import base64
@@ -122,12 +123,28 @@ class universitiesTable:
         campus = int(form_result_map['campus'])
         social = int(form_result_map['social'])
         education = int(form_result_map['education'])
-        cursor.execute("UPDATE avg_score SET score_by_campus= ( (score_by_campus * score_count) + %d) / (score_count+1) WHERE (id=%d)" % (campus,score_id))
-        cursor.execute("UPDATE avg_score SET score_by_education= ( (score_by_education * score_count) + %d) / (score_count+1) WHERE (id=%d)" % (education,score_id))
-        cursor.execute("UPDATE avg_score SET score_by_social_life= ( (score_by_social_life * score_count) + %d) / (score_count+1), score_count=score_count+1 WHERE (id=%d)" % (social,score_id))
-        cursor.execute("UPDATE avg_score SET average_score=(score_by_campus+score_by_education+score_by_social_life)/3.0 WHERE (id=%d)" % (score_id))
+
+        if int(campus)>100 or int(social)>100 or int(education)>100:
+            return False
+        if int(campus) + int(social) + int(education) == 300:
+            return False
+
+        if score_id:
+            cursor.execute("UPDATE avg_score SET score_by_campus= ( (score_by_campus * score_count) + %d) / (score_count+1) WHERE (id=%d)" % (campus,score_id))
+            cursor.execute("UPDATE avg_score SET score_by_education= ( (score_by_education * score_count) + %d) / (score_count+1) WHERE (id=%d)" % (education,score_id))
+            cursor.execute("UPDATE avg_score SET score_by_social_life= ( (score_by_social_life * score_count) + %d) / (score_count+1), score_count=score_count+1 WHERE (id=%d)" % (social,score_id))
+            cursor.execute("UPDATE avg_score SET average_score=(score_by_campus+score_by_education+score_by_social_life)/3.0 WHERE (id=%d)" % (score_id))
+        else:
+            cursor.execute("INSERT INTO avg_score (score_by_campus,score_by_education,score_by_social_life) VALUES (%d,%d,%d)" % (int(campus),int(education),int(social)))
+            db_connection.commit()
+            cursor.execute("SELECT MAX(id) FROM avg_score")
+            new_score_id = cursor.fetchone()
+            cursor.execute("UPDATE avg_score SET average_score=(score_by_campus+score_by_education+score_by_social_life)/3.0 WHERE (id=%d)" % (new_score_id[0]))
+            cursor.execute("UPDATE universities SET score_id=%d WHERE(name='%s')" % (new_score_id[0],university_name))
+
         db_connection.commit()
         cursor.close()
+        return True
 
         
 
@@ -293,7 +310,7 @@ class usersTable:
         query = "SELECT (avatar) FROM users WHERE(id=%d)" % (user_id)
         cursor.execute(query)
         imgdata = cursor.fetchone()
-        if(imgdata[0] != None):
+        if imgdata[0]:
             image = base64.b64decode(imgdata[0])
         else:
             return None
@@ -317,30 +334,63 @@ class universityPhotosTable:
         universities_table = universitiesTable()
         logoname = 'static/img/logo'
         backname = 'static/img/back'
+
+        photoExistsList = []
+
+
         index = 1
         for each_tuple in theListOfUniversityTuples:
+
+            logo_back = ()
+
             university_id = universities_table.getUniversityIDbyName(each_tuple[0])
-            query = "SELECT (logo) FROM university_photos WHERE(id=(SELECT (images_id) FROM universities WHERE (id=%d)) )" % (int(university_id))
-            cursor.execute(query)
-            imgdata = cursor.fetchone()
-            if(imgdata[0] != None):
-                image = base64.b64decode(imgdata[0])
+
+            cursor.execute("SELECT images_id FROM universities WHERE(id=%d)" % (university_id))
+            images_id_tuple = cursor.fetchone()
+            images_id = images_id_tuple[0]
+
+
+
+            logo_back = list(logo_back)
+
+            if images_id:
+                
+                query = "SELECT (logo) FROM university_photos WHERE(id=(SELECT (images_id) FROM universities WHERE (id=%d)) )" % (int(university_id))
+                cursor.execute(query)
+                imgdata = cursor.fetchone()
+                if imgdata[0]:
+                    logo_back.append(1)
+                    image = base64.b64decode(imgdata[0])
+                    looplogoname = logoname + "%d.jpg" % (index)
+                    with open(looplogoname, 'wb') as logo:
+                        logo.write(image)
+                else:
+                    logo_back.append(0)
             else:
-                continue
-            looplogoname = logoname + "%d.jpg" % (index)
-            with open(looplogoname, 'wb') as logo:
-                logo.write(image)  
-            query = "SELECT (background) FROM university_photos WHERE(id=(SELECT (images_id) FROM universities WHERE (id=%d)) )" % (int(university_id))
-            cursor.execute(query)
-            imgdata = cursor.fetchone()
-            if(imgdata[0] != None):
-                image = base64.b64decode(imgdata[0])
+                logo_back.append(0)
+
+            
+            if images_id:
+                
+                query = "SELECT (background) FROM university_photos WHERE(id=(SELECT (images_id) FROM universities WHERE (id=%d)) )" % (int(university_id))
+                cursor.execute(query)
+                imgdata = cursor.fetchone()
+                if imgdata[0]:
+                    logo_back.append(1)
+                    image = base64.b64decode(imgdata[0])
+                    loopbackname = backname + "%d.jpg" % (index)
+                    with open(loopbackname, 'wb') as back:
+                        back.write(image)
+                else:
+                    logo_back.append(0)
             else:
-                continue 
-            loopbackname = backname + "%d.jpg" % (index)
-            with open(loopbackname, 'wb') as back:
-                back.write(image)
+                logo_back.append(0)
+
+            logo_back = tuple(logo_back)
+            photoExistsList.append(logo_back)
             index = index+1
+
+        return photoExistsList
 
 
     
@@ -440,33 +490,27 @@ class eventsTable:
         db_connection.commit()
         cursor.close()
 
-    def addEvent(self,request_form):
+    def addEventByClubId(self,form_request_map, club_id):
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
-        event_added = 0
-        form_request_map = request_form.to_dict()
+        
         title = form_request_map['title']
         description = form_request_map['description']
         price = form_request_map['price']
         place = form_request_map['place']
         time = form_request_map['time_selection']
+
         date = form_request_map['date']
+        try:
+            datetime.datetime.strptime(date, '%Y-%m-%d')
+        except ValueError:
+            return "Date instance must be in format of YYYY-MM-DD"
+
         duration = form_request_map['duration']
-        club_name = form_request_map['club_selection']
-        university_name = form_request_map['university_selection']
-        universities_table = universitiesTable()
-        university_id = universities_table.getUniversityIDbyName(university_name)
-        club_id_query = "SELECT (clubs.id) FROM universities,clubs WHERE ((universities.id=clubs.university_id)AND(clubs.name='%s')AND(universities.id=%d))" % (club_name,university_id)
-
-        cursor.execute(club_id_query)
-
-        club_id = cursor.fetchone()
-        print(club_id)
-        add_event_query = "INSERT INTO events (title,description,price,place,event_date,event_time,duration,club_id,user_id) VALUES('%s','%s',%f,'%s','%s','%s',%d,%d,%d)" % (title,description,float(price),place,date,time,int(duration),int(club_id[0]),current_user.id)
+        add_event_query = "INSERT INTO events (title,description,price,place,event_date,event_time,duration,club_id,user_id) VALUES('%s','%s',%f,'%s','%s','%s',%d,%d,%d)" % (title,description,float(price),place,date,time,int(duration),int(club_id),current_user.id)
         cursor.execute(add_event_query)
         db_connection.commit()
-        event_added = 1
-        return event_added
+
 
     def deleteEventById(self,event_id):
         db_connection = dbapi2.connect(global_database_url)
@@ -482,7 +526,7 @@ class commentsTable:
     def getAllComments(self):
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
-        query = "SELECT * FROM comments"
+        query = "SELECT * FROM comments ORDER BY comment_time"
         cursor.execute(query)
         comments_tuple = cursor.fetchall()
         cursor.close()
@@ -492,7 +536,7 @@ class commentsTable:
     def getCommentsByEventId(self, event_id):
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
-        query = "SELECT * FROM comments WHERE (event_id=%d)" % (int(event_id))
+        query = "SELECT * FROM comments WHERE (event_id=%d) ORDER BY comment_time" % (int(event_id))
         cursor.execute(query)
         comments_tuple = cursor.fetchall()
         cursor.close()
