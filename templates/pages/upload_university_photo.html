@@ -1,0 +1,57 @@
+{% extends "layouts/master_layout.html" %}
+
+
+{% block navbarcontent %}
+
+	{% include "layouts/navbar.html" %}
+
+	{% block usercontent %}
+        <div style="xborder:1px solid black; width:17%; max-width:17%; display:inline-block;" class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> {{ current_user.name }}
+            <div class="submenu">
+          {% if current_user.is_authenticated() %}
+                <div class="submenuItem" onClick="location.href='/profile'"> Profile </div>
+                <div class="submenuItem" onClick="location.href='/login'"> Logout </div>
+             
+          {% else %}
+                <div class="submenuItem" onClick="location.href='/login'"> Login </div>
+          {% endif %}
+            </div>
+
+        </div>
+    {% endblock %}
+
+{% endblock %}
+
+
+{% block bodycontent %}
+
+    <h1 class="pageInfo" > UPLOAD PHOTO </h1>
+
+    <h4 class="pageInfo" >University logo or background altering page for Admin.</h4>
+
+
+    <form class="form-div" enctype=multipart/form-data method="POST" action="">
+
+    	University:
+        <select name="university_selection">
+    	{% for each_university_name in university_names %}
+    		<option>{{ each_university_name }}</option>
+    	{% endfor %}
+        </select>
+    	<br><br><br>
+
+    	Photo type:<br>
+    	<input type="radio" name="photo_type" value="Logo" required> Logo <br>
+    	<input type="radio" name="photo_type" value="Background" required> Background <br>
+    	<br><br>
+
+    	<input type=file name=photo>
+
+    	<button class="mySubmitButton">Upload</button>
+
+    </form>
+    
+
+{% endblock %}
+
+
