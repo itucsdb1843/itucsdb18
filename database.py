@@ -99,7 +99,6 @@ class universitiesTable:
             #print(tuplesAsString)
             university_tuple = tuple(tuplesAsString.split(','))
             #print(type(university_tuple))
-            #print(university_tuple)
             list_of_tuples.append(university_tuple)
 
 
