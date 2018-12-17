@@ -6,6 +6,13 @@ import psycopg2 as dbapi2
 
 INIT_STATEMENTS = [
 
+    """CREATE TABLE IF NOT EXISTS university_photos(
+        id SERIAL PRIMARY KEY NOT NULL,
+        logo BYTEA,
+        background BYTEA 
+    )""",
+
+
     """CREATE TABLE IF NOT EXISTS universities(
         id SERIAL NOT NULL PRIMARY KEY,
         name VARCHAR(100) UNIQUE NOT NULL,
@@ -20,34 +27,7 @@ INIT_STATEMENTS = [
         FOREIGN KEY (score_id) REFERENCES avg_score ON DELETE SET NULL ON UPDATE CASCADE
     )""",
 
-    
 
-    """CREATE TABLE IF NOT EXISTS users(
-        id SERIAL NOT NULL PRIMARY KEY, 
-        name VARCHAR(20) NOT NULL, 
-        surname VARCHAR(20) NOT NULL, 
-        nickname VARCHAR(20) UNIQUE NOT NULL,
-        password VARCHAR(80) NOT NULL,
-        email TEXT UNIQUE NOT NULL,
-        status VARCHAR(15) NOT NULL,
-        city VARCHAR(15),
-        university_id INT,
-        last_login TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        registration_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        avatar BYTEA DEFAULT NULL,
-        FOREIGN KEY (university_id) REFERENCES universities ON DELETE SET NULL ON UPDATE CASCADE
-    )""",
-
-    """CREATE TABLE IF NOT EXISTS clubs(
-        id SERIAL NOT NULL PRIMARY KEY,
-        name VARCHAR(80) NOT NULL,
-        departman_name VARCHAR(50),
-        foundation_date INT,
-        member_count INT DEFAULT 1,
-        contact_mail VARCHAR(50),
-        university_id INT NOT NULL,
-        FOREIGN KEY (university_id) REFERENCES universities ON DELETE CASCADE ON UPDATE CASCADE
-    )""",
 
     """CREATE TABLE IF NOT EXISTS events(
         id SERIAL NOT NULL PRIMARY KEY,
@@ -79,21 +59,36 @@ INIT_STATEMENTS = [
         user_nickname VARCHAR(20) NOT NULL,
         FOREIGN KEY (event_id) REFERENCES events ON DELETE CASCADE ON UPDATE CASCADE,
         FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE
-    )""",
-   
-
-    """CREATE TABLE IF NOT EXISTS todos(
-        id SERIAL NOT NULL PRIMARY KEY,
-        body VARCHAR(200) NOT NULL,
-        start_date DATE,
-        expected_end_date DATE,
-        real_end_date DATE DEFAULT NULL,
-        completed INT DEFAULT 0,
-        chain_id INT NOT NULL,
-        FOREIGN KEY (chain_id) REFERENCES chains ON DELETE CASCADE ON UPDATE CASCADE
     )"""
-
     
+
+
+
+    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+        'Istanbul Technical University',
+        'Istanbul',
+        'Turkey',
+        'Maslak 34467',
+        '+902165234527',
+        'wwww.itu.edu.tr'
+    )""",
+
+    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+        'Bogazici University',
+        'Istanbul',
+        'Turkey',
+        'Hisarustu 34467',
+        '+903425236787',
+        'wwww.bogazici.edu.tr'
+    )""",
+
+    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+        'Middle East Technical University',
+        'Turkey',
+        '100. yil No:245 34563',
+        '+904525234527',
+        'wwww.metu.edu.tr'
+    )"""
 
 ]
 
