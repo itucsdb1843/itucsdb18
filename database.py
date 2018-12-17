@@ -5,8 +5,7 @@ from flask_login import login_user, current_user, logout_user
 import base64
 from models.user import User
 
-global_database_url = "postgres://itucs:itucspw@localhost:32768/itucsdb"
-
+global_database_url = "postgres://vfssrhxrwgmkjb:a9106ca3abea0a13108ea5de84abdf8f06ff2678d5488f0155f435ef0c8d5bba@ec2-107-20-211-10.compute-1.amazonaws.com:5432/desn7uabq7s0di"
 
 class universitiesTable:
 
