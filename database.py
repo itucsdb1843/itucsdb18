@@ -114,7 +114,7 @@ class universitiesTable:
 
         from form import formValidation
         form_validation = formValidation()
-        score_validation_result = form_validation.validateScode(form_result_map)
+        score_validation_result = form_validation.validateScore(form_result_map)
         if not score_validation_result:
             return False
 
