@@ -4,13 +4,315 @@ body{
 }
 
 .maindiv {
+    top:1px;
     background-color: #bbb;
     position: relative;
     width: 80%;
     left: 10%;
-    height: 700px;
+    z-index: 0;
+    min-height: 1400px;
 
 }
+
+.register-div{
+
+    background-color: white;
+    width:50%;
+    border:2px solid black;
+    left:25%;
+    position:relative;
+
+}
+
+.chainForm{
+
+    background-color: white;
+    width:50%;
+    border:2px solid black;
+    position:relative;
+
+}
+
+.universityScoreForm{
+    background-color: white;
+    width:50%;
+    border:2px solid black;
+    left:25%;
+    position:relative;
+    display:none;
+}
+
+.form-div{
+
+    width:60%;
+    left:20%;
+    margin-top:30px;
+    xborder:1px solid black;
+    position:relative;
+
+}
+
+
+.mySubmitButton{
+    background-color: #FFF;
+    border: 1px solid #008CBA;
+    padding: 8px 16px;
+    text-align: center;
+    cursor: pointer;
+    font-size:20px;
+    color: #008CBA;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+    margin-bottom:30px;
+
+}
+.mySubmitButton:hover{
+    background-color: #008CBA;
+    border: 1px solid #00FFFF;
+    color: white;
+}
+
+.myLoginButton{
+    background-color: #FFF;
+    border: 1px solid #4CAF50;
+    padding: 8px 16px;
+    text-align: center;
+    cursor: pointer;
+    font-size:20px;
+    color: #4CAF50;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+    margin-bottom:30px;
+
+}
+.myLoginButton:hover{
+    background-color: #4CAF50;
+    border: 1px solid #00ff00;
+    color: white;
+}
+
+
+.navbarMenu{
+    margin-right:-5px;
+    position: relative;
+    width:70%;
+    height:40px;
+    display: inline-block;
+    z-index: 2;
+    background-color: rgb(230,230,230);
+    color: black;
+    xtop: 1px;
+    xborder: 1px solid rgb(50,50,50);
+}
+
+.navbarItem{
+    margin-right:-5px;
+    height:40px;
+    padding-left:2%;
+    padding-right:2%;
+    display: inline-block;
+    font-family: Helvetica;
+    font-size: 12px;
+    color: green;
+    xborder:1px solid black;
+    background-color: rgb(230,230,230);
+    z-index:2;
+
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+}
+
+.navbarItem:hover{
+    color: white;
+    cursor: pointer;
+    background-color: rgb(150,150,250);
+    z-index:3;
+
+
+}
+
+.submenu{
+    background-color: rgb(230,230,230);
+    display: block;
+    position:relative;
+    height: 0px;
+    width: 0px;
+    border:1px solid black;
+    transition: height 0.2s ease;
+    transition: width 0.2s ease;
+    z-index:2;
+}
+
+.submenuItem{
+    height:0px;
+    width: 0px;
+    text-align:center;
+    color: black;
+    visibility:hidden;
+    opacity:0;
+    z-index:2;
+    border:1px solid black;
+    transition: height 0.1s ease 0.2s;
+    transition: opacity 0.1s ease 0.3s;
+
+}
+
+.submenuItem:hover{
+    color: white;
+    background-color: #003;
+}
+
+.universityCard{
+    border:1px solid black;
+    position:relative;
+    width:100%;
+    height:300px;
+    cursor:pointer;
+}
+
+.logoCard{
+    margin-right:-5px;
+    xborder:1px solid blue;
+    position:relative;
+    width:300px;
+    height:100%;
+    float:left;
+    background-color:grey;
+
+}
+
+.infoCardBackground{
+    margin-left:300px;
+    border:1px solid red;
+    position:relative;
+    height:100%;
+    /* The image used */
+    xbackground-image: url("../images/itu.jpg");
+    /* Add the blur effect */
+    filter: blur(8px);
+    -webkit-filter: blur(1px);
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.infoCardContent{
+    margin-left:150px;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.0); /* Black w/opacity/see-through */
+    height:100%;
+    width:60%;
+
+    /*text style*/
+    color: white;
+    font-weight: bold;
+
+    xborder: 3px solid #f1f1f1;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.eventId{
+    float:right;
+    color:blue;
+}
+
+.commentsDiv{
+    border:1px solid black;
+    position:relative;
+    width:100%;
+    margin-bottom: 20px;
+    display:none;
+}
+
+.singleCommentDiv{
+    border:1px solid black;
+    position:relative;
+    width:60%;
+    left:20%;
+    margin-bottom: 5px;
+}
+
+.commentBody{
+    font-size:13px;
+    margin-top:0;
+}
+
+
+
+.pageInfo{
+    text-align: center;
+    color: #008CBA;
+}
+
+
+.profilePhotoDiv{
+    border-radius:50%;
+    width:200px;
+    height:200px;
+    border: 2px solid black;
+    overflow:hidden;
+    vertical-align: middle;
+    line-height: 200px;
+
+    text-align:center;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.profilePhotoContainer{
+    text-align:center;
+    width:100%;
+    height:200px;
+    xborder:2px solid black;
+    margin-bottom:30px;
+}
+
+.profileInfo{
+    text-align:center;
+    width:100%;
+}
+
+.profileSelection{
+    color:#005;
+    font-size:30px;
+    font-weight:bold;
+    margin-top:30px;
+    width:100%;
+    border:1px solid black;
+    cursor:pointer;
+}
+.editProfileInfo{
+    border:2px solid black;
+    width:100%;
+    display:none;
+}
+
+.changeProfilePhoto{
+    border:2px solid black;
+    width:100%;
+    display:none;
+}
+
+.addEvent{
+    border:2px solid black;
+    width:100%;
+    display:none;
+}
+
+.chainDiv{
+    border:2px solid black;
+    width:100%;
+}
+
 
 .footer{
     text-align: center;
@@ -31,60 +333,5 @@ body{
     height: 100px;
     width:200px;
     text-align: center;
-
-}
-
-.navbar{
-    display: block;
-    background-color: rgb(230,230,230);
-    color: black;
-    bordrer: 1px solid rgb(50,50,50);
-    padding: 10px 10px 10px 0px;
-}
-
-
-.submenu{
-    background-color: orange;
-    display: block;
-    height: 0px;
-    top:40px;
-    position:absolute;
-    transition: height 0.3s ease;
-    width: 250px;
-}
-
-.submenu a{
-    text-decoration: none;
-    text-align:left;
-    color: black;
-    padding: 10px;
-    display:none;
-}
-
-.submenu a:hover{
-    color: white;
-    background-color: #003;
-}
-
-
-ni{
-    font-family: Helvetica;
-    display: inline;
-}
-
-.navbar-item{
-    padding: 10px;
-
-}
-.navbar-item:hover{
-    color: white;
-    cursor: pointer;
-    background-color: rgb(150,150,250);
-
-}
-.deneme2{
-
-    text-align: center;
-    color: white;
 
 }
