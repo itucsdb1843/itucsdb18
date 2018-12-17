@@ -5,6 +5,9 @@ import psycopg2 as dbapi2
 
 
 INIT_STATEMENTS = [
+                   
+    """DELETE FROM universities""",
+    """DELETE FROM clubs""",
     
     """CREATE TABLE IF NOT EXISTS university_photos(
         id SERIAL PRIMARY KEY NOT NULL,
@@ -116,31 +119,31 @@ INIT_STATEMENTS = [
 
 
 
-    #"""INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
-        #'Istanbul Technical University',
-        #'Istanbul',
-        #'Turkey',
-        #'Maslak 34467',
-        #'+902165234527',
-        #'wwww.itu.edu.tr'
-    #)""",
+    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+        'Istanbul Technical University',
+        'Istanbul',
+        'Turkey',
+        'Maslak 34467',
+        '+902165234527',
+        'wwww.itu.edu.tr'
+    )""",
 
-    #"""INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
-        #'Bogazici University',
-        #'Istanbul',
-        #'Turkey',
-        #'Hisarustu 34467',
-        #'+903425236787',
-        #'wwww.bogazici.edu.tr'
-    #)""",
+    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+        'Bogazici University',
+        'Istanbul',
+        'Turkey',
+        'Hisarustu 34467',
+        '+903425236787',
+        'wwww.bogazici.edu.tr'
+    )""",
 
-    #"""INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
-        #'Middle East Technical University',
-        #'Turkey',
-        #'100. yil No:245 34563',
-        #'+904525234527',
-       # #'wwww.metu.edu.tr'
-    #)""",
+    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+        'Middle East Technical University',
+        'Turkey',
+        '100. yil No:245 34563',
+        '+904525234527',
+        'wwww.metu.edu.tr'
+    )""",
                    
     """INSERT INTO clubs(name,departman_name,foundation_date,member_count,contact_mail,university_id) VALUES (
        'IEEE',
