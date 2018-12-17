@@ -10,28 +10,65 @@
 
     <script>
 
-    function showSubmenu(navbarItem){
-        var submenu = navbarItem.children[0];
-        submenu.style.height = "150px";
-        var subitems = submenu.children;
+        //refresh the page in every 3 seconds
+        //setTimeout(function() {
+        //    window.location.href = "/profile";
+        //}, 3000);
 
-        for(var i in subitems){
-            subitems[i].style.display = "block";
+
+        //take leaving confirmation
+        //window.onbeforeunload = xconfirmExit;
+        //function confirmExit(){
+        //    return "You have attempted to leave this page.  If you have made any changes to the fields without clicking the Save button, your changes will be lost.  Are you sure you want to exit this page?";
+        //}
+        
+
+        function showSubmenu(navbarItem){
+            var submenu=navbarItem.children[0];
+            submenu.style.height="auto";
+            submenu.style.width="200px";
+            var subitems=submenu.children;
+            for(var i in subitems){
+                subitems[i].style.transition = "height 0.1s ease 0.2s";
+                subitems[i].style.transition =  "opacity 0.1s ease 0.3s";
+                subitems[i].style.height="30px";
+                subitems[i].style.width="100%";
+                subitems[i].style.opacity = "1";
+                //subitems[i].style.zIndex = "2";
+                subitems[i].style.visibility = "visible";
+            }
         }
 
-    }
+        function hideSubmenu(navbarItem){
+            var submenu = navbarItem.children[0];
+            submenu.style.height = "0px";
+            submenu.style.width = "0px";
+            var subitems = submenu.children
 
-    function hideSubmenu(navbarItem){
-        var submenu = navbarItem.children[0];
-        submenu.style.height = "0px";
-        var subitems = submenu.children
+            for(var i in subitems){
+                subitems[i].style.transition = "height 0.0s ease";
+                subitems[i].style.transition =  "opacity 0.0s ease";
+                subitems[i].style.height = "0px";
+                subitems[i].style.width = "0px";
+                subitems[i].style.opacity = "0";
+                //subitems[i].style.zIndex = "-1";
+                subitems[i].style.visibility = "hidden";
+            }
 
-        for(var i in subitems){
-            subitems[i].style.display = "none";
         }
 
-    }
 
+        function toggleCommentsDiv(previous){
+            var commentsDiv = previous.nextElementSibling;
+
+            if(commentsDiv.style.display === "none"){
+                commentsDiv.style.display = "block";
+            }
+            else{
+                commentsDiv.style.display = "none";
+            }    
+        }
+        
     </script>
 
 </head>
@@ -40,7 +77,9 @@
 
     <div class="maindiv">
 
-        {% include "layouts/navbar.html" %}
+        {% block navbarcontent %}
+
+        {% endblock %}
 
 
 
