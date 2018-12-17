@@ -31,6 +31,9 @@ class universitiesTable:
             university_photos_table.updatePhoto(filename, photo_type, images_id)
 
 
+
+
+
     def getImagesIdByUniversityName(self,university_name):
         db_connection = dbapi2.connect(global_database_url)
         cursor = db_connection.cursor()
@@ -126,6 +129,104 @@ class universitiesTable:
         cursor.execute("UPDATE avg_score SET average_score=(score_by_campus+score_by_education+score_by_social_life)/3.0 WHERE (id=%d)" % (score_id))
         db_connection.commit()
         cursor.close()
+
+        
+
+
+class universityPhotosTable:
+
+    def fetchAllPhotos(self,theListOfUniversityTuples):
+        db_connection = dbapi2.connect(global_database_url)
+        cursor = db_connection.cursor()
+        universities_table = universitiesTable()
+        logoname = 'static/img/logo'
+        backname = 'static/img/back'
+        index = 1
+        for each_tuple in theListOfUniversityTuples:
+            university_id = universities_table.getUniversityIDbyName(each_tuple[0])
+            query = "SELECT (logo) FROM university_photos WHERE(id=(SELECT (images_id) FROM universities WHERE (id=%d)) )" % (int(university_id))
+            cursor.execute(query)
+            imgdata = cursor.fetchone()
+            if(imgdata[0] != None):
+                image = base64.b64decode(imgdata[0])
+            else:
+                continue
+            looplogoname = logoname + "%d.jpg" % (index)
+            with open(looplogoname, 'wb') as logo:
+                logo.write(image)  
+            query = "SELECT (background) FROM university_photos WHERE(id=(SELECT (images_id) FROM universities WHERE (id=%d)) )" % (int(university_id))
+            cursor.execute(query)
+            imgdata = cursor.fetchone()
+            if(imgdata[0] != None):
+                image = base64.b64decode(imgdata[0])
+            else:
+                continue 
+            loopbackname = backname + "%d.jpg" % (index)
+            with open(loopbackname, 'wb') as back:
+                back.write(image)
+            index = index+1
+
+
+    
+    def updatePhoto(self,filename,photo_type,images_id):
+        db_connection = dbapi2.connect(global_database_url)
+        cursor = db_connection.cursor()
+        with open("static/img/%s" % (filename), "rb") as university_photo:
+            if university_photo == None:
+                print("Cannot open image.")
+                return
+            university_photo_encoded = base64.b64encode(university_photo.read())
+            university_photo_encoded_str = university_photo_encoded.decode('utf-8')
+
+            if photo_type == 'Logo':
+                cursor.execute("UPDATE university_photos SET logo='%s' WHERE(id='%s')" % (university_photo_encoded_str, str(images_id) ))
+            else:
+                cursor.execute("UPDATE university_photos SET background='%s' WHERE(id='%s')" % (university_photo_encoded_str, str(images_id) ))
+
+            db_connection.commit()
+            cursor.close()
+
+
+    def addPhoto(self,filename,photo_type,university_name):
+        db_connection = dbapi2.connect(global_database_url)
+        cursor = db_connection.cursor()
+        with open("static/img/%s" % (filename), "rb") as university_photo:
+            if university_photo == None:
+                print("Cannot open image.")
+                return
+            university_photo_encoded = base64.b64encode(university_photo.read())
+            university_photo_encoded_str = university_photo_encoded.decode('utf-8')
+
+            if photo_type == 'Logo':
+                cursor.execute("INSERT INTO university_photos (logo) VALUES('%s')" % (university_photo_encoded_str))
+                
+
+            else:
+                cursor.execute("INSERT INTO university_photos (background) VALUES('%s')" % (university_photo_encoded_str))
+
+            db_connection.commit()
+            cursor.execute("UPDATE universities SET images_id=(SELECT MAX(id) from university_photos) WHERE (name='%s')" % (university_name))
+            db_connection.commit()
+            cursor.close()
+
+
+
+
+    def getPhoto(self):
+        db_connection = dbapi2.connect(global_database_url)
+        cursor = db_connection.cursor()
+        query = "SELECT (logo) FROM university_photos WHERE(id=4)"
+        #cursor.execute(query)
+        #imgdata = cursor.fetchone()
+        #if(imgdata != None):
+        #    image = base64.b64decode(imgdata[0])
+        #else:
+        #    return None
+
+        #filename = 'temp.jpg'
+        #with open(filename, 'wb') as photo:
+        #    photo.write(image)
+        #return photo
 
 
 class eventsTable:
@@ -261,12 +362,4 @@ class commentsTable:
         cursor.execute(query)
         db_connection.commit()
         cursor.close()
-
-
-
-
-
-
-
-
 
