@@ -90,20 +90,6 @@ def university_rankings_page():
 		theListOfUniversityTuples = universities_table.getUniversitiesAndScoresOrderedByScore()
 		university_photos_table = universityPhotosTable()
 		university_photos_table.fetchAllPhotos(theListOfUniversityTuples)
-		#print(type(universities_and_scores_best_to_worst)) #list of tuple of tuples_as_strings
-		#print(universities_and_scores_best_to_worst)
-		#uni_tuple = universities_best_to_worst[0]
-		#print(type(uni_tuple)) #tuple of tuples_as_strings
-		#print(uni_tuple)
-		#first_tuple_str = uni_tuple[0]
-		#print(type(first_tuple_str)) #tuples_as_string
-		#print(first_tuple_str)
-		#uni_real_tuple = tuple(first_tuple_str.split(","))
-
-		#print(uni_real_tuple)
-		#index = 0
-		
-		#print()
 		return render_template('pages/university_rankings.html', theList = theListOfUniversityTuples)
 
 	else:
