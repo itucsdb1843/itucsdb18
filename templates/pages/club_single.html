@@ -6,8 +6,19 @@
 	{% include "layouts/navbar.html" %}
 
 
-	{% block logincontent %}
-		<div style="xborder:1px solid black" class="navbarItem" onClick="location.href='/login'"> {{current_user.name}} </div>
+	{% block usercontent %}
+		<div style="xborder:1px solid black; width:17%; max-width:17%; display:inline-block;" class="navbarItem" onmouseenter="showSubmenu(this)" onmouseleave="hideSubmenu(this)"> {{ current_user.name }}
+            <div class="submenu">
+          {% if current_user.is_authenticated() %}
+                <div class="submenuItem" onClick="location.href='/profile'"> Profile </div>
+                <div class="submenuItem" onClick="location.href='/login'"> Logout </div>
+             
+          {% else %}
+                <div class="submenuItem" onClick="location.href='/login'"> Login </div>
+          {% endif %}
+            </div>
+
+        </div>
 	{% endblock %}
 
 
