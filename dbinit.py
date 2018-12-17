@@ -11,8 +11,7 @@ INIT_STATEMENTS = [
         logo BYTEA,
         background BYTEA 
     )""",
-
-
+                   
     """CREATE TABLE IF NOT EXISTS universities(
         id SERIAL NOT NULL PRIMARY KEY,
         name VARCHAR(100) UNIQUE NOT NULL,
@@ -26,8 +25,6 @@ INIT_STATEMENTS = [
         FOREIGN KEY (images_id) REFERENCES university_photos ON DELETE SET NULL ON UPDATE CASCADE,
         FOREIGN KEY (score_id) REFERENCES avg_score ON DELETE SET NULL ON UPDATE CASCADE
     )""",
-
-
 
     """CREATE TABLE IF NOT EXISTS events(
         id SERIAL NOT NULL PRIMARY KEY,
@@ -59,7 +56,7 @@ INIT_STATEMENTS = [
         user_nickname VARCHAR(20) NOT NULL,
         FOREIGN KEY (event_id) REFERENCES events ON DELETE CASCADE ON UPDATE CASCADE,
         FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE
-    )"""
+    )""",
     
 
 
@@ -84,10 +81,29 @@ INIT_STATEMENTS = [
 
     """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
         'Middle East Technical University',
+        'Ankara',
         'Turkey',
         '100. yil No:245 34563',
         '+904525234527',
         'wwww.metu.edu.tr'
+    )""",
+    
+    """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+       'Yildiz Teknik Universitesi',
+       'Istanbul',
+       'Turkey',
+       'Davutpasa 34467',
+       '+9034738959034',
+       'wwww.ytu.edu.tr'
+    )""",
+   
+   """INSERT INTO universities (name, city, country, address, phone_no, website) VALUES(
+       'Ege University',
+       'Izmir',
+       'Turkey',
+       'Bornova 34563',
+       '+904525833527',
+       'wwww.eu.edu.tr'
     )"""
 
 ]
