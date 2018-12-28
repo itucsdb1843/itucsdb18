@@ -1,0 +1,200 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>How to use this repository &#8212; Univertown 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Univertown 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>This repository contains a template project for the Database Systems course
+of the Istanbul Technical University Computer Engineering Department.
+The project uses the Python language, the Flask web application framework,
+and the PostgreSQL database.</p>
+<div class="section" id="how-to-use-this-repository">
+<h1>How to use this repository<a class="headerlink" href="#how-to-use-this-repository" title="Permalink to this headline">¶</a></h1>
+<p><strong>ITU students</strong></p>
+<ul class="simple">
+<li>Create a GitHub organization for your team using the name that was assigned
+to your team (in the form <code class="docutils literal notranslate"><span class="pre">itucsdb18NN</span></code> where <code class="docutils literal notranslate"><span class="pre">NN</span></code> is your team number).</li>
+<li>Fork this repository <em>into that organization</em>.</li>
+<li>Rename the repository so that it will have the same name as the team.</li>
+<li>(Every team member) Clone the repository to your local machine.</li>
+</ul>
+<p><strong>Setup</strong></p>
+<p>Run the following command to install the dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m pip install -r requirements.txt
+</pre></div>
+</div>
+<p>You can now start the application using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python server.py
+</pre></div>
+</div>
+<p>And when you visit the address <code class="docutils literal notranslate"><span class="pre">http://localhost:5000/</span></code> you should see
+the “Hello, world!” message.</p>
+<p>Alternatively, you can also start the application using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ gunicorn server:app
+</pre></div>
+</div>
+<p>In this case, the address will be <code class="docutils literal notranslate"><span class="pre">http://localhost:8000/</span></code>.</p>
+<p><strong>Deploying to Heroku</strong></p>
+<ul>
+<li><p class="first">Use the button below to deploy your application to Heroku.
+(<em>ITU students</em>: Only one team member needs to do this.)</p>
+<a class="reference external image-reference" href="https://heroku.com/deploy"><img alt="Deploy to Heroku" src="https://www.herokucdn.com/deploy/button.svg" /></a>
+</li>
+<li><p class="first">As “App name” enter your team name, and click the “Deploy app” button.</p>
+</li>
+<li><p class="first">Now when you click the “View” button you should access your application
+under the address <code class="docutils literal notranslate"><span class="pre">http://itucsdb18NN.herokuapp.com/</span></code>.</p>
+</li>
+</ul>
+<p>We want to set up our project so that whenever commits are pushed
+to the GitHub repo the application will be automatically deployed to Heroku.</p>
+<ul class="simple">
+<li>Click the “Manage app” button and choose the “Deploy” tab.</li>
+<li>For deployment method, choose “GitHub (Connect to GitHub)”
+and under its options choose “Automatic deploys from GitHub”.</li>
+<li>If requested, allow Heroku to access your repositories.
+(<em>ITU students</em>: In the authorization form, also grant access
+to the organization repositories before submitting the form.)</li>
+<li>Choose your repository, click the “Connect” button, and then
+click the “Enable automatic deploys” button.</li>
+</ul>
+<p>In your code, change the “Hello, world!” message, and commit and push
+your change to GitHub. A while later the application on Heroku should
+display the new message. You can use the activity tab on Heroku to see
+how deployments are going.</p>
+<p><strong>Database</strong></p>
+<p>By default, the project is meant to be used with a PostgreSQL server.
+You can use any PostgreSQL installation but a Dockerfile is provided
+for convenience. Docker will host the PostgreSQL client under the hood.
+Docker is a container for your programs which allows
+you to unify development/testing/production environments.</p>
+<p>In MacOS, you can install Docker from its official website
+<a class="reference external" href="https://www.docker.com/products/docker-desktop">https://www.docker.com/products/docker-desktop</a></p>
+<p>Many Linux distributions has Docker in its official package repositories.
+<a class="reference external" href="https://docs.docker.com/install">https://docs.docker.com/install</a></p>
+<p>Before running Docker, you may need to start Docker service in Linux. This can be done by many ways,
+one is explained below:</p>
+<p>It is quite advanced for new Linux user but it is manageble.</p>
+<p>Another options is to start Docker Daemon manually,
+Which can be achieved by one of following commands:</p>
+<ul class="simple">
+<li>$ <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">systemctl</span> <span class="pre">start</span> <span class="pre">docker</span></code></li>
+<li>$ <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">docker</span> <span class="pre">start</span></code></li>
+<li>$ <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">dockerd</span></code></li>
+</ul>
+<p>After making sure that Docker daemon is up and running, you are ready to build/start containers.</p>
+<p>To build the container, run:: (You may need to have root privelege for using Docker depending on Docker Daemon. If it is the case, add <code class="docutils literal notranslate"><span class="pre">sudo</span></code> to commands.)</p>
+<blockquote>
+<div>$ docker build -t itucsdb .</div></blockquote>
+<p>The command for running the container is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -P --name postgres itucsdb
+</pre></div>
+</div>
+<p>If you have a PostgreSQL client you can connect to the server using
+the username <code class="docutils literal notranslate"><span class="pre">itucs</span></code>, the password <code class="docutils literal notranslate"><span class="pre">itucspw</span></code> and the database
+<code class="docutils literal notranslate"><span class="pre">itucsdb</span></code>. The server will be accessible through the host <code class="docutils literal notranslate"><span class="pre">localhost</span></code>
+but you have to figure out the port number:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
+d58b35f6503b        itucsdb             &quot;/usr/lib/postgresql…&quot;   8 minutes ago       Up 8 minutes        0.0.0.0:32775-&gt;5432/tcp   postgres
+</pre></div>
+</div>
+<p>In this example, under the <code class="docutils literal notranslate"><span class="pre">PORTS</span></code> column, you can see that the port number
+is <code class="docutils literal notranslate"><span class="pre">32775</span></code>.</p>
+<p>If you don’t have a PostgreSQL client, you can use another docker instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -it --rm --link postgres:postgres postgres psql -h postgres -U itucs itucsdb
+</pre></div>
+</div>
+<p>You should arrange the <code class="docutils literal notranslate"><span class="pre">dbinit.py</span></code> script to properly initialize
+your database. This script requires that you provide the database URL
+as an environment variable, so here’s an example of how you can run it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ DATABASE_URL=&quot;postgres://itucs:itucspw@localhost:32775/itucsdb&quot; python dbinit.py
+</pre></div>
+</div>
+<p><strong>Deploying Documentation</strong></p>
+<p>Documentation is located in <cite>docs/source</cite> directory.
+You should change <cite>ITUCSDB18NN</cite> in <cite>conf.py</cite> file to match your team name.</p>
+<p>Travis-CI will be used to automatically publish Sphinx documentation in Github Pages.</p>
+<ul class="simple">
+<li>Create a token by visiting <a class="reference external" href="https://github.com/settings/tokens">https://github.com/settings/tokens</a> page and clicking on “Generate new token”.</li>
+<li>Select <cite>public_repo</cite> permission, generate the token and copy it to clipboard.</li>
+<li>Enable your project in <a class="reference external" href="https://travis-ci.org">https://travis-ci.org</a> (<em>ITU students</em>: only one team member needs to do this).</li>
+<li>In project settings (in Travis-CI) add your token in “Environment Variables” section.</li>
+<li>Set variable name as <cite>GH_TOKEN</cite> and paste your token to the value. “Display value in build log” should be <cite>off</cite>.</li>
+<li>After pushing anything to the <cite>master</cite> branch, your documentation will become visible at <a class="reference external" href="https://itucsdb18NN.github.io/itucsdb18NN/">https://itucsdb18NN.github.io/itucsdb18NN/</a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Univertown 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, itucsdb1843.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.
+    </div>
+  </body>
+</html>

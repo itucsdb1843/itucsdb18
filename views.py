@@ -8,6 +8,7 @@ import os
 after_registration = False
 scored = False
 
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

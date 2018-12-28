@@ -1,0 +1,404 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>IMPLEMENTATION NOTES &#8212; Univertown 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PAGES" href="pages.html" />
+    <link rel="prev" title="DATABASE MANAGEMENT" href="database.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pages.html" title="PAGES"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="database.html" title="DATABASE MANAGEMENT"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Univertown 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="implementation-notes">
+<h1>IMPLEMENTATION NOTES<a class="headerlink" href="#implementation-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-user">
+<span id="models"></span><h2>Models<a class="headerlink" href="#module-user" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="user.Anonymous">
+<em class="property">class </em><code class="descclassname">user.</code><code class="descname">Anonymous</code><a class="headerlink" href="#user.Anonymous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="user.User">
+<em class="property">class </em><code class="descclassname">user.</code><code class="descname">User</code><span class="sig-paren">(</span><em>user_tuple</em><span class="sig-paren">)</span><a class="headerlink" href="#user.User" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<ul class="simple">
+<li>User model is used for the session that keeps track of the user activities.</li>
+<li>Carrying every attribute that a user has.</li>
+<li>Comunicating with the Flask-Login_Manager.</li>
+<li>Anonymous model is used for Guest session which pretty much does nothing but provides a name to anonymous users.</li>
+<li>Does not carry the information of the guests.</li>
+</ul>
+</div>
+<div class="section" id="views">
+<h2>Views<a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h2>
+<p>➡ 9 view_functions for 9 routes(url_rules).</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>home_page()</dt>
+<dd><ul class="first last">
+<li>Homepage with hyeperlinks.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>profile_page()</dt>
+<dd><ul class="first last">
+<li>Requires login.</li>
+<li>Uses current user in the session.</li>
+<li>Reads from universities, clubs and users relations in database.</li>
+<li>Writes(Updates) to users relation in database.</li>
+<li><dl class="first docutils">
+<dt>Answers 3 post requests:</dt>
+<dd><ul class="first last">
+<li>Editing profile info</li>
+<li>Changing profile photo</li>
+<li>Adding an event</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>study_chains_page()</dt>
+<dd><ul class="first last">
+<li>Requires login.</li>
+<li>Uses current user in the session.</li>
+<li>Reads from chains and todos relations in database.</li>
+<li>Writes(Updates) to chains and todos relations in database.</li>
+<li><dl class="first docutils">
+<dt>Answers 2 post requests:</dt>
+<dd><ul class="first last">
+<li>Adding a new chain</li>
+<li>Adding a todo to a chain</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>events_page()</dt>
+<dd><ul class="first last">
+<li>Requires login.</li>
+<li>Uses current user in the session.</li>
+<li>Reads from events and comments relations in database.</li>
+<li>Writes(Updates) to events and comments relations in database.</li>
+<li><dl class="first docutils">
+<dt>Answers 5 post requests:</dt>
+<dd><ul class="first last">
+<li>Commenting an event</li>
+<li>Deleting a comment</li>
+<li>Upvoting a comment</li>
+<li>Downvoting a comment</li>
+<li>Deleting an event</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>clubs_page(club_id=None)</dt>
+<dd><ul class="first last">
+<li>Requires login.</li>
+<li>Uses current user in the session.</li>
+<li>Reads from clubs, events and universities relations in database.</li>
+<li>Writes(Updates) to events and comments relations in database.</li>
+<li><dl class="first docutils">
+<dt>Answers 6 post requests:</dt>
+<dd><ul class="first last">
+<li>Adding an event</li>
+<li>Commenting an event</li>
+<li>Scoring an event</li>
+<li>Upvoting a comment</li>
+<li>Downvoting a comment</li>
+<li>Deleting a comment</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>upload_university_photo_page()</dt>
+<dd><ul class="first last">
+<li>Requires login.</li>
+<li>Reads from universities relation in database.</li>
+<li>Writes(Updates) to universities and university_photos relations in database.</li>
+<li><dl class="first docutils">
+<dt>Answers 1 post request:</dt>
+<dd><ul class="first last">
+<li>Uploading an image</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>university_rankings_page()</dt>
+<dd><ul class="first last">
+<li>Does not require login.</li>
+<li>Reads from universities and university_photos relations in database.</li>
+<li>Writes(Updates) to universities and avg_score relations in database.</li>
+<li><dl class="first docutils">
+<dt>Answers 1 post request:</dt>
+<dd><ul class="first last">
+<li>Scoring a university</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>register_page()</dt>
+<dd><ul class="first last">
+<li>Does not require login.</li>
+<li>Reads from universities relation in database.</li>
+<li>Writes(Updates) to users relation in database.</li>
+<li><dl class="first docutils">
+<dt>Answers 1 post request:</dt>
+<dd><ul class="first last">
+<li>Registration of a guest</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>login_page()</dt>
+<dd><ul class="first last">
+<li>Does not require login.</li>
+<li>Does not read from any relation.</li>
+<li>Does not write to any relation.</li>
+<li><dl class="first docutils">
+<dt>Answers 1 post request:</dt>
+<dd><ul class="first last">
+<li>Login of a guest</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>click <a class="reference external" href="file:///home/user/DB/itucsdb1843/_build/html/pages.html#feasibilities">here</a> to see what these functions is used for in a User Interface perspective.</li>
+</ul>
+</div>
+<div class="section" id="methods-controllers">
+<h2>Methods (Controllers)<a class="headerlink" href="#methods-controllers" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>➡ 8 classes for 9 tables(relations) to implement their methods.</dt>
+<dd><ul class="first last simple">
+<li>method for the table avg_score is implemented in the class for universities table.</li>
+</ul>
+</dd>
+</dl>
+<p>➡ Method names are tried to be given clean so that no explanation would be needed.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>class universitiesTable:</dt>
+<dd><ul class="first last">
+<li>uploadAndSetPhoto(self,request_files, request_form):</li>
+<li>getImagesIdByUniversityName(self,university_name):</li>
+<li>getUniversityNames(self):</li>
+<li>getUniversityIDbyName(self,university_name):</li>
+<li>getScoreIdByName(self,university_name):</li>
+<li>getAllUniversityNamesAndIds(self):</li>
+<li>getUniversitiesAndScoresOrderedByScore(self):</li>
+<li>addScore(self,request_form):</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>class usersTable:</dt>
+<dd><ul class="first last">
+<li>editUserProfileInfo(self,form_result_map):</li>
+<li>changeAvatar(self,request_files):</li>
+<li>addUser(self,form_result_map):</li>
+<li>makeUserLoggedIn(self, form_nickname, form_password):</li>
+<li>getUserObjectByID(self, user_id):</li>
+<li>getAvatar(self,user_id):</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>class eventsTable:</dt>
+<dd><ul class="first last">
+<li>getAllEvents(self):</li>
+<li>getEventsByClubId(self, club_id):</li>
+<li>addScore(self,form_result_map):</li>
+<li>addEventByClubId(self,form_request_map, club_id):</li>
+<li>deleteEventById(self,event_id):</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>class commentsTable:</dt>
+<dd><ul class="first last">
+<li>getAllComments(self):</li>
+<li>getCommentsByEventId(self, event_id):</li>
+<li>addComment(self,form_result_map):</li>
+<li>updateUpvote(self,comment_id):</li>
+<li>updateDownvote(self,comment_id):</li>
+<li>deleteCommentById(self,comment_id):</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>class todosTable:</dt>
+<dd><ul class="first last">
+<li>addToDo(self,request_form):</li>
+<li>getAllTodosOfAChain(self,chain_id):</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>class chainsTable:</dt>
+<dd><ul class="first last">
+<li>getAllChainsOfTheUser(self):</li>
+<li>getChainIdByTitle(self,chain_name):</li>
+<li>createChain(self,chain_title):</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>class universityPhotosTable:</dt>
+<dd><ul class="first last">
+<li>fetchAllPhotos(self,theListOfUniversityTuples):</li>
+<li>updatePhoto(self,filename,photo_type,images_id):</li>
+<li>addPhoto(self,filename,photo_type,university_name):</li>
+<li>getPhoto(self):</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>class clubsTable:</dt>
+<dd><ul class="first last">
+<li>getClubNames(self):</li>
+<li>getAllClubs(self):</li>
+<li>getClubById(self, club_id):</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="database.html"
+                        title="previous chapter">DATABASE MANAGEMENT</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pages.html"
+                        title="next chapter">PAGES</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pages.html" title="PAGES"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="database.html" title="DATABASE MANAGEMENT"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Univertown 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, itucsdb1843.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.
+    </div>
+  </body>
+</html>

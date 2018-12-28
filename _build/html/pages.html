@@ -1,0 +1,299 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PAGES &#8212; Univertown 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PROJECT META" href="project.html" />
+    <link rel="prev" title="IMPLEMENTATION NOTES" href="implementation.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="PROJECT META"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="IMPLEMENTATION NOTES"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Univertown 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pages">
+<h1>PAGES<a class="headerlink" href="#pages" title="Permalink to this headline">¶</a></h1>
+<p>➡ This document is about what users are able to do in each url of the website.</p>
+<div class="section" id="feasibilities">
+<h2>Feasibilities<a class="headerlink" href="#feasibilities" title="Permalink to this headline">¶</a></h2>
+<p>➡ 10 url’s exist that can be visited in the website which will be referred with “html” extensions.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Homepage: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/">here1</a> to visit)</dt>
+<dd><ul class="first last">
+<li>index.html</li>
+<li>Rendered in home_page() view function.</li>
+<li>Homepage is the a page where only hyperlinks are provided.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>User Profile: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/profile">here2</a> to visit)(login required)</dt>
+<dd><ul class="first last">
+<li>profile.html</li>
+<li>Rendered in profile_page() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a registered user is able to:</dt>
+<dd><ul class="first last">
+<li>See the profile photo(avatar).</li>
+<li>Read and change the profile information.</li>
+<li>Change the profile photo.</li>
+<li>Hyperlink to the photo upload page for universities.</li>
+<li>Hyperlink to own study chains.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>University Rankings: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/university_rankings">here3</a> to visit)</dt>
+<dd><ul class="first last">
+<li>university_rankings.html</li>
+<li>Rendered in university_rankings() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a user is able to:</dt>
+<dd><ul class="first last">
+<li>See the universities ordered by score.</li>
+<li>Universities are rendered with logo, background, and all the other data.</li>
+<li>Score a university</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Clubs: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/clubs">here4</a> to visit)(login required)</dt>
+<dd><ul class="first last">
+<li>clubs.html</li>
+<li>Rendered in clubs_page() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a registered user is able to:</dt>
+<dd><ul class="first last">
+<li>See the list of universities with their clubs.</li>
+<li>Hyperlink to a club profile by clicking on it.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Events: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/events">here5</a> to visit)(login required)</dt>
+<dd><ul class="first last">
+<li>events.html</li>
+<li>Rendered in events_page() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a registered user is able to:</dt>
+<dd><ul class="first last">
+<li>See the all events with all the information they have.</li>
+<li>Delete an event if he/she is the creator of that event.</li>
+<li>Comment on an event by clicking on the event card.</li>
+<li>Score an event by clicking on the event card.</li>
+<li>Delete a comment if he/she is the creator of that comment.</li>
+<li>Upvote any comment.</li>
+<li>Downvote any comment.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Club Profile: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/clubs/1">here6</a> to visit)(login required)(wildcard needed)</dt>
+<dd><ul class="first last">
+<li>club_single.html</li>
+<li>Rendered in clubs_page() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a registered user is able to:</dt>
+<dd><ul class="first last">
+<li>See only the events of that particular club.</li>
+<li>Add an event for that club.</li>
+<li>Comment on an event by clicking on the event card.</li>
+<li>Score an event by clicking on the event card.</li>
+<li>Delete a comment if he/she is the creator of that comment.</li>
+<li>Upvote any comment.</li>
+<li>Downvote any comment.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Login: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/login">here7</a> to visit)</dt>
+<dd><ul class="first last">
+<li>login.html</li>
+<li>Rendered in login_page() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a non-logged-in user is able to:</dt>
+<dd><ul class="first last">
+<li>Login by nickname and password.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Registration: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/register">here8</a> to visit)</dt>
+<dd><ul class="first last">
+<li>register.html</li>
+<li>Rendered in register_page() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a user is able to:</dt>
+<dd><ul class="first last">
+<li>Register by filling the registration form and submitting it.</li>
+<li>Read the names of the universities that the system has to pick one during registration.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Upload University Photo: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/upload_university_photo">here9</a> to visit)(login required)</dt>
+<dd><ul class="first last">
+<li>upload_university_photo.html</li>
+<li>Rendered in profile_page() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a registered user is able to:</dt>
+<dd><ul class="first last">
+<li>Read the names of the universities that the system has to pick one.</li>
+<li>Select the photo type as either logo or background.</li>
+<li>Browse a photo to upload.</li>
+<li>Submit the changes.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>User Study Chains: (click <a class="reference external" href="https://itucsdb1843.herokuapp.com/study_chains">here</a> to visit)(login required)</dt>
+<dd><ul class="first last">
+<li>study_chains.html</li>
+<li>Rendered in study_chains() view function.</li>
+<li><dl class="first docutils">
+<dt>Here, a registered user is able to:</dt>
+<dd><ul class="first last">
+<li>See the profile photo(avatar).</li>
+<li>Add a new study chain by filling up the designated form.</li>
+<li>Add a new TODO to one of the own study chains by filling up the designated form.</li>
+<li>See the existing study chains and TODO’s of them.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="implementation.html"
+                        title="previous chapter">IMPLEMENTATION NOTES</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="project.html"
+                        title="next chapter">PROJECT META</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="PROJECT META"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="IMPLEMENTATION NOTES"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Univertown 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, itucsdb1843.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.
+    </div>
+  </body>
+</html>

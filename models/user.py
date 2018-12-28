@@ -1,6 +1,10 @@
 from flask_login import UserMixin, AnonymousUserMixin
 
 class User(UserMixin):
+
+	#User model is used for the session that keeps track of the user activities.
+	#Carrying every attribute that a user has.
+	#Comunicating with the Flask-Login_Manager
  
     def __init__(self,user_tuple):
         self.id = user_tuple[0]
@@ -32,6 +36,10 @@ class User(UserMixin):
 
 
 class Anonymous(AnonymousUserMixin):
+
+	#Anonymous model is used for Guest session which pretty much does nothing but provides a name to anonymous users.
+	#Does not carry the information of the guests.	
+
     def __init__(self):
         self.name = 'Guest'
 
